@@ -9,8 +9,9 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 1. Text Editor - Notepad++, Visual Studio Code(Recommended), Atom, etc.
-2. [XAMPP](https://www.apachefriends.org/download.html)
+2. Server & Database - [XAMPP](https://www.apachefriends.org/download.html)
 3. Browser - Mozilla Firefox (latest), Google Chrome (latest)
+4. Version Control - [Git](https://git-scm.com/downloads)
 
 ### Running locally
 
