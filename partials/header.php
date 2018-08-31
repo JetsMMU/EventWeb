@@ -19,6 +19,10 @@
         <li class="nav-item">
           <a class="nav-link" href="login.php">Login</a>
         </li>
+        <!-- To add a new file to header -->
+        <!-- <li class="nav-item">
+          <a class="nav-link" href="filename.php">filename/suitable name</a>
+        </li> -->
       </ul>
     </div>
   </div>
