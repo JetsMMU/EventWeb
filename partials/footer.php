@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer class="footer text-center">
   <div class="container">
     <span>&copy <span id="year"></span> EventWeb(Jets). All rights reserved.</span> 
     <a href="../docs/doc.html" id="doc">Documentation</a>
