@@ -9,3 +9,15 @@
 
 <!-- local -->
 <link rel="stylesheet" href="src/css/style.css">
+
+<!-- favicon -->
+<link rel="shortcut icon" href="../src/img/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="../src/img/favicon.ico" type="image/x-icon" />
+
+<!-- color -->
+<meta name="theme-color" content="#00838f" />
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#00838f">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
