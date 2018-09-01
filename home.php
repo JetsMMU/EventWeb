@@ -22,7 +22,7 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <h3 style="font-weight: lighter;">Browse Events</h3>
+        <a href="event.php"><h3 style="font-weight: lighter;">Browse Events</h3></a>
         <p>Check Events across Your Interests. Browse through The Most Anticipated Events.</p>
       </div>
       <div class="col-md-4">
