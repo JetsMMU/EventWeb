@@ -10,7 +10,7 @@ try {
 } catch (PDOException $e) {
 	die($e->getMessage());
 }
-
+//testing 
 // for dashboard.php
 if (isset($_POST['eventAttendees']) && $_POST['eventAttendees'] && isset($_POST['eventName'])) {
   //   $sql = 'SELECT user.name 
