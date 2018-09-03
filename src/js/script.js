@@ -13,7 +13,7 @@ for (var i = 0; i < links.length; i++) {
 }
 
 var filename = window.location.pathname;
-if (filename === '/events.php') {
+if (filename === '/event.php') {
 	function setEventModal(eventName, eventDetail, isEventEnded) {
 		var modalContent = document.getElementsByClassName('modal-content')[0];
 
@@ -55,11 +55,11 @@ if (filename === '/events.php') {
 	function eventWellHandler(e) {
 		// Get event name
 		var eventName;
-		if (e.target.classList.contains('well')) {
-			eventName = e.target.getElementsByTagName('h4')[0].textContent;
+		if (e.target.classList.contains('card-body')) {
+			eventName = e.target.getElementsByTagName('h5')[0].textContent;
 		} else if (e.target.tagName === 'P') {
-			eventName = e.target.parentNode.getElementsByTagName('h4')[0].textContent;
-		} else if (e.target.tagName === 'H4') {
+			eventName = e.target.parentNode.getElementsByTagName('h5')[0].textContent;
+		} else if (e.target.tagName === 'H5') {
 			eventName = e.target.textContent;
 		} else { // User didn't click a specific event card
 			return;
