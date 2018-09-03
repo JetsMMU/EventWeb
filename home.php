@@ -22,16 +22,34 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <a href="event.php"><h3 style="font-weight: lighter;">Browse Events</h3></a>
-        <p>Check Events across Your Interests. Browse through The Most Anticipated Events.</p>
+        <div class="card">
+          <div class="card-body">
+          <a href="/event.php"><h3 class="card-title" style="font-weight: lighter;">Browse Events</h3></a>
+            <p class="card-text">
+              Check Events across Your Interests. Browse through The Most Anticipated Events.
+            </p>
+          </div>
+        </div>
       </div>
       <div class="col-md-4">
-        <h3 style="font-weight: lighter;">Create Events</h3>
-        <p>Create Events and Announce Them to the World.</p>
+        <div class="card">
+          <div class="card-body">
+            <a href="#"><h3 class="card-title" style="font-weight: lighter;">Create Events</h3></a>
+            <p class="card-text">
+              Create Events and Announce Them to the World.
+            </p>
+          </div>
+        </div>
       </div>
       <div class="col-md-4">
-        <h3 style="font-weight: lighter;">Attend Events</h3>
-        <p>Check Events that interest you most and Grab the Chance to attend.</p>
+        <div class="card">
+          <div class="card-body">
+            <a href="#"><h3 class="card-title" style="font-weight: lighter;">Attend Events</h3></a>
+            <p class="card-text">
+              Check Events that interest you most and Grab the Chance to attend.
+            </p>
+          </div>
+        </div>   
       </div>
     </div>
 
