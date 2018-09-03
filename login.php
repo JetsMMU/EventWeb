@@ -1,3 +1,60 @@
+<?php 
+  session_start();
+
+  // Connect to database
+  $config = require('config.php');
+  $dsn = $config['connection'] . ';dbname=' . $config['dbname'] . ';charset=' . $config['charset'];
+  try {
+      $pdo = new PDO($dsn, $config['username'], $config['password'], $config['options']);
+  } catch (PDOException $e) {
+      die($e->getMessage());
+  }
+
+    // variable declaration
+	$username = "";
+	$email    = "";
+	$errors = array(); 
+
+    // LOGIN USER
+	if (isset($_POST['login_user'])) {
+        // receive all input from the form
+		$username = (isset($_POST['username']) ? $_POST['username'] : null);
+        $password = (isset($_POST['password']) ? $_POST['password'] : null);
+
+        // form validation: ensure that the form is filled
+		if (empty($username)) {
+			array_push($errors, "Username is required");
+		}
+		if (empty($password)) {
+			array_push($errors, "Password is required");
+		}
+
+        // login user if there are no errors in the form
+		if (count($errors) == 0) {
+      //get user/password combination from db
+      $sql = "SELECT password FROM user WHERE name='$username'";
+      $stmt = $pdo->prepare($sql);
+      $stmt->execute();
+      $pw = $stmt->fetchAll();
+      $count_pw = count($pw);
+      
+      if ($count_pw>0){
+          $hash = $pw['0']['password'];
+          //verify password
+          if (password_verify($password, $hash)) {
+              $_SESSION['username'] = $username;
+              header('location: home.php');
+          }else {
+              array_push($errors, "Wrong username/password combination");
+          }
+      }
+      else {
+          array_push($errors, "Wrong username/password combination");
+      }
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,20 +66,18 @@
   <?php require('partials/header.php'); ?>
 
   <!-- body -->
-  <div class="container text-center sp-body">
-    <form class="form-signin">
-      <!--<img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
+  <div class="container justify-content-center sp-body">
+    <form method="post">
+      <?php include('errors.php');?>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" required autocomplete="off" autofocus>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
+      </div>
+      <button type="submit" class="btn btn-primary" name="login_user">Log In</button>
     </form>
   </div>
 
