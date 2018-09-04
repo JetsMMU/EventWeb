@@ -20,7 +20,7 @@
           <a class="nav-link" href="/login.php">Login</a>
         </li> -->
         <?php if(isset($_SESSION['username'])): ?>
-					<li class="nav-item"><a class="nav-link" href="/create-event.php">Create Event</a></li>
+					<li class="nav-item"><a class="nav-link" href="/createEvent.php">Create Event</a></li>
 					<li class="nav-item"><a class="nav-link" href="/dashboard.php">Dashboard</a></li>
 					<li class="nav-item"><a class="nav-link" href="/profile.php">My Profile</a><li>
 				<?php endif; ?>
