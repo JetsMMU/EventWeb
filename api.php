@@ -89,7 +89,7 @@ else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isse
 		'username' => $_SESSION['username']
 	]);
 	$_SESSION['createEventMessage'] = $_POST['eventName'] . ' is created.';
-	header('location: create-event.php');
+	header('location: createEvent.php');
 }
 
 // for undefined behaviour
