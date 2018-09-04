@@ -51,15 +51,18 @@
 
   <!-- body -->
   <div class="container">
-		<div class="row">
-			<?php if (isset($_SESSION['eventAttendanceMessage'])) { ?>
-				<div class="alert alert-success">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					<strong>Success!</strong> <?php echo $_SESSION['eventAttendanceMessage']; ?>
-				</div>
-			<?php } ?>
-			<?php unset($_SESSION['eventAttendanceMessage']); ?>
-
+    <div class="row">
+      <div class="col">
+        <?php if (isset($_SESSION['eventAttendanceMessage'])) { ?>
+          <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> <?php echo $_SESSION['eventAttendanceMessage']; ?>
+          </div>
+        <?php } ?>
+        <?php unset($_SESSION['eventAttendanceMessage']); ?>
+      </div>
+    </div>
+    <div class="row">
       <div class="col">
         <ul class="nav nav-tabs nav-stacked">
           <li class="nav-item">

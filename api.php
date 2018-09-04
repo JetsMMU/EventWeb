@@ -72,7 +72,7 @@ else if (isset($_POST['eventName']) && isset($_POST['eventAttendance'])) {
 	}
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute(['eventname' => $_POST['eventName'], 'username' => $_SESSION['username']]);
-	header('location: events.php');
+	header('location: event.php');
 }
 
 // for create-event.php
