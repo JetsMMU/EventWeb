@@ -64,11 +64,13 @@
               <td></td>
               <td></td> 
               <td align = "right">Total: </td>
-              <td id = "pepe"></td>
+              <td id = "totalprice">0.00</td>
             </tr>
             </table>
+            <div align="right">
             <td><button id="removeButton" type="button" class="btn btn-default" disabled>Remove</button></td>
-            <td><button type="button" class="btn btn-default">Checkout</button></td>
+            <td><button id="checkoutButton" type="button" class="btn btn-default" disabled>Checkout</button></td>
+          </div>
         </div>		
       </div>
 		</div>
@@ -79,14 +81,27 @@
 
   <script>
     var total = 0;
+    var checkboxes = 0;
     function getTotal($a, $b) {
       var checkBox = document.getElementById($b);
       if (checkBox.checked == true){
         total = total + $a;
+        checkboxes++;
       } else {
         total = total - $a;
+        checkboxes--;
       }
-      document.getElementById("pepe").innerHTML = total;
+      document.getElementById("totalprice").innerHTML = total.toFixed(2);
+      if(checkboxes > 0)
+      {
+        $("#removeButton").attr("disabled",false);
+        $("#checkoutButton").attr("disabled",false);
+      }
+      else
+      {
+        $("#removeButton").attr("disabled",true);
+        $("#checkoutButton").attr("disabled",true);
+      }
     }
   </script>
 </body>
