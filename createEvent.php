@@ -43,7 +43,7 @@
 
 		<h1>Create Event</h1>
 		
-		<form method="POST" action="/api.php">
+		<form method="POST" action="/Eventweb/api.php">
 			<div class="form-group">
 				<label for="eventName">Event Name: </label>
 				<input type="text" name="eventName" class="form-control" id="eventName">

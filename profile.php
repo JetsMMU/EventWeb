@@ -90,7 +90,7 @@
 
   <!-- body -->
   <div class="topBg">
-    <img src="images/bg.png" alt="background">
+    <img src="/EventWeb/src/img/favicon.ico" alt="background">
     <h1> @<?php echo $thisuser ?> </h1>
   </div>
 
