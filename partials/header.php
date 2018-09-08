@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="/home.php">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/EventWeb/home.php">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/event.php">Browse Events</a>
+          <a class="nav-link" href="/EventWeb/event.php">Browse Events</a>
         </li>
         <!-- <li class="nav-item">
           <a class="nav-link" href="/signup.php">Sign Up</a>
@@ -20,15 +20,16 @@
           <a class="nav-link" href="/login.php">Login</a>
         </li> -->
         <?php if(isset($_SESSION['username'])): ?>
-					<li class="nav-item"><a class="nav-link" href="/createEvent.php">Create Event</a></li>
-					<li class="nav-item"><a class="nav-link" href="/dashboard.php">Dashboard</a></li>
-					<li class="nav-item"><a class="nav-link" href="/profile.php">My Profile</a><li>
+					<li class="nav-item"><a class="nav-link" href="/EventWeb/createEvent.php">Create Event</a></li>
+					<li class="nav-item"><a class="nav-link" href="/EventWeb/dashboard.php">Dashboard</a></li>
+					<li class="nav-item"><a class="nav-link" href="/EventWeb/profile.php">My Profile</a><li>
+          <li class="nav-item"><a class="nav-link" href="/EventWeb/cart.php">My Cart</a><li>
 				<?php endif; ?>
 				<?php if(isset($_SESSION['username'])): ?>
-					<li class="nav-item"><a class="nav-link" href="/logout.php">Logout</a></li>
+					<li class="nav-item"><a class="nav-link" href="/EventWeb/logout.php">Logout</a></li>
 				<?php else: ?>
-					<li class="nav-item"><a class="nav-link" href="/signup.php">Sign Up</a></li>
-					<li class="nav-item"><a class="nav-link" href="/login.php">Login</a></li>
+					<li class="nav-item"><a class="nav-link" href="/EventWeb/signup.php">Sign Up</a></li>
+					<li class="nav-item"><a class="nav-link" href="/EventWeb/login.php">Login</a></li>
 				<?php endif; ?>
         <!-- To add a new file to header -->
         <!-- <li class="nav-item">
