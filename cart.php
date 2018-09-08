@@ -14,7 +14,7 @@
   }
   
   // Retrieve events and their organizers
-  $sql = 'SELECT event.name, event.date, event.time, event.description, event.price, user.name AS organizer
+  $sql = 'SELECT event.id, event.name, event.date, event.time, event.description, event.price, user.name AS organizer
   FROM event
   INNER JOIN user ON event.user_id = user.id
   ORDER BY event.date desc';
@@ -54,7 +54,7 @@
             </tr>
             <?php foreach ($cartContents as $event) { ?>
             <tr>
-              <td><input type="checkbox" name="event" value="Event"></td>
+              <td><input type="checkbox" id="<?php echo $event['id'];?>" onclick="getTotal(<?php echo $event['price']; ?>, <?php echo $event['id']; ?>)"></td>
               <td><?php echo $event['name'];?></td> 
               <td><?php echo $event['description']; ?></td>
               <td><?php echo $event['price']; ?></td>
@@ -64,10 +64,10 @@
               <td></td>
               <td></td> 
               <td align = "right">Total: </td>
-              <td></td>
+              <td id = "pepe"></td>
             </tr>
             </table>
-            <td><button type="button" class="btn btn-default">Remove</button></td>
+            <td><button id="removeButton" type="button" class="btn btn-default" disabled>Remove</button></td>
             <td><button type="button" class="btn btn-default">Checkout</button></td>
         </div>		
       </div>
@@ -76,5 +76,18 @@
 
   <!-- footer -->
   <?php require('partials/footer.php'); ?>
+
+  <script>
+    var total = 0;
+    function getTotal($a, $b) {
+      var checkBox = document.getElementById($b);
+      if (checkBox.checked == true){
+        total = total + $a;
+      } else {
+        total = total - $a;
+      }
+      document.getElementById("pepe").innerHTML = total;
+    }
+  </script>
 </body>
 </html>
