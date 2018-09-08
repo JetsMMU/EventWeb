@@ -215,3 +215,34 @@ if (filename === '/event.php') {
 		}
   	}
 }
+
+function AddBorder(num) { 
+	if(num == 1)
+	{
+		document.getElementById('opt1').style.border = '4px solid black';
+		document.getElementById('opt2').style.border = 'none';
+		document.getElementById('opt3').style.border = 'none';
+		document.getElementById('opt4').style.border = 'none';
+	}
+	if(num == 2)
+	{
+		document.getElementById('opt1').style.border = 'none';
+		document.getElementById('opt2').style.border = '4px solid black';
+		document.getElementById('opt3').style.border = 'none';
+		document.getElementById('opt4').style.border = 'none';
+	}
+	if(num == 3)
+	{
+		document.getElementById('opt1').style.border = 'none';
+		document.getElementById('opt2').style.border = 'none';
+		document.getElementById('opt3').style.border = '4px solid black';
+		document.getElementById('opt4').style.border = 'none';
+	}
+	if(num == 4)
+	{
+		document.getElementById('opt1').style.border = 'none';
+		document.getElementById('opt2').style.border = 'none';
+		document.getElementById('opt3').style.border = 'none';
+		document.getElementById('opt4').style.border = '4px solid black';
+	}
+	}

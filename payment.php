@@ -1,7 +1,7 @@
 <?php
 	session_start();
 
-$config = require('config.php');
+  $config = require('config.php');
   $dsn = $config['connection'] . ';dbname=' . $config['dbname'] . ';charset=' . $config['charset'];
   try {
     $pdo = new PDO($dsn, $config['username'], $config['password'], $config['options']);
@@ -10,7 +10,7 @@ $config = require('config.php');
   }
   
   // Retrieve events and their organizers
-  $sql = 'SELECT event.name, event.date, event.time, user.name AS organizer
+  $sql = 'SELECT event.name, event.date, event.time, event.description, event.price, user.name AS organizer
   FROM event
   INNER JOIN user ON event.user_id = user.id
   ORDER BY event.date desc';
@@ -18,20 +18,16 @@ $config = require('config.php');
   $stmt->execute();
   $events = $stmt->fetchAll();
 
-  // Separate events into upcoming and past
-  $upcomingEvents = [];
-  $pastEvents = [];
+  // Array to store all of the contents in cart
+  $cartContents = [];
+  $totalprice = [];
 
   foreach ($events as $event) {
-    // Convert 00:00:00 to 00:00 AM/PM
-    $event['time'] = date('h:i A', strtotime($event['time']));
+      array_push($cartContents, $event);
+  }
 
-    // Check whether event's datetime >= today 
-    if (date('Y-m-d H:i:s', strtotime($event['date'] . ' ' . $event['time'])) >= date('Y-m-d H:i:s')) {
-      array_push($upcomingEvents, $event);
-    } else {
-      array_push($pastEvents, $event);
-    }
+  foreach ($events as $event) {
+      array_push($totalprice, $event{"price"});
   }
 ?>
 
@@ -42,6 +38,10 @@ $config = require('config.php');
 <html lang="en">
 <head>
   <?php require('partials/html-head.php'); ?>
+
+
+
+
 </head>
 <body>
   <!-- header -->
@@ -56,31 +56,36 @@ $config = require('config.php');
     </div>
   </div>
 
-<div class="container text-left">
+ 
+<div class="container text-left" >
+    
     <div class="row">
-    <div class="col-md-2">
-      <figure class="figure" align="center">
+    <div id="opt1" class="col-md-2" onclick="AddBorder(1);">
+     <figure  class="figure" align="center" onclick="addborder();" >
         <img src="/EventWeb/src/img/maybank.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+
         <figcaption class="figure-caption">Maybank2u.</figcaption>
       
-      </figure>
+    </figure>
+      
     </div>
-    
-    <div class="col-md-2">
+
+
+    <div id="opt2" class="col-md-2" onclick="AddBorder(2);">
       <figure class="figure" align="center">
         <img src="/EventWeb/src/img/cimbclick.png" class="figure-img img-fluid rounded" class="center" alt="A generic square placeholder image with rounded corners in a figure.">
         <figcaption class="figure-caption"; >CIMB Clicks.</figcaption>
       </figure>
     </div>
     
-    <div class="col-md-2">
+    <div id="opt3" class="col-md-2" onclick="AddBorder(3);">
       <figure class="figure" align="center">
         <img src="/EventWeb/src/img/visa.png" class="figure-img img-fluid rounded" class="center" alt="A generic square placeholder image with rounded corners in a figure.">
         <figcaption class="figure-caption"; >Visa.</figcaption>
       </figure>
     </div>
 
-    <div class="col-md-2" >
+    <div id="opt4" class="col-md-2" onclick="AddBorder(4);">
       <figure class="figure" align="center" >
         <img src="/EventWeb/src/img/mastercard.png" class="figure-img img-fluid rounded" class="center" alt="A generic square placeholder image with rounded corners in a figure.">
         <figcaption class="figure-caption"; >Master Card.</figcaption>
@@ -93,16 +98,16 @@ $config = require('config.php');
     <div class="tab-pane" id="past">
             <h3>Event Description</h3>
             <div class="row">
-              <?php foreach ($pastEvents as $event) { ?>
-                <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal">
-                  <div class="card-body">
-                    <h5 class="card-title"><?php echo $event['name']; ?></h5>
-                    <p>By: <?php echo $event['organizer']; ?></p>
-                    <p>Date: <?php echo $event['date']; ?></p>
-                    <p>Time: <?php echo $event['time']; ?></p>
-                  </div> 
-                </div>
-              <?php } ?>
+
+            <?php foreach ($cartContents as $event) { ?>
+            <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal">
+              <div class="card-body">
+                <p><h5>Event Name:</h5> <?php echo $event['name'];?></p> 
+                <p><h5>Description:</h5> <?php echo $event['description']; ?></p>
+                <p><h5>Price:</h5> <?php echo $event['price']; ?></p>
+              </div>
+            </div>
+            <?php } ?>
             </div>
           </div>          
         </div>    
@@ -111,12 +116,21 @@ $config = require('config.php');
 
 <div class="container text-right">
 <div class="col-sm-12">
-                    <h3>Total Payment: </h4>
-                    <h4>RM100</h4>
+
                     
-                  </div>
-                </div>
+                    <h3>Total Payment: </h4>
+                    <h4><?php echo array_sum($totalprice);?></h4>
+
 </div>
+</div>
+
+  <div class="container text-right">
+    <div class="row">
+    <div class="col-sm-12">
+    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="cancel" class="btn btn-default">Cancel</button>
+  </div>
+  </div>
 </div>
   <!-- footer -->
   <?php require('partials/footer.php'); ?>
