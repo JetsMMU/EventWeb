@@ -1,7 +1,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title><?php echo ucfirst(strtok(htmlspecialchars($_SERVER['REQUEST_URI']), "/.")) . " | EventWeb"; ?></title>
+<title><?php echo ucfirst(strtok(htmlspecialchars($_SERVER['REQUEST_URI']), "/")) . " | EventWeb"; ?></title>
 
 <!-- import -->
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">

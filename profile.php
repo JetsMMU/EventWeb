@@ -90,7 +90,7 @@
 
   <!-- body -->
   <div class="topBg">
-    <img src="/EventWeb/src/img/favicon.ico" alt="background">
+    <!-- <img src="/EventWeb/src/img/favicon.ico" alt="background"> -->
     <h1> @<?php echo $thisuser ?> </h1>
   </div>
 
@@ -121,7 +121,8 @@
               <label class="col-md-5 control-label" for="Change Password">Change Your Password</label>
               <div class="col-md-7">
                 <div class="profile-padding">
-                  Click <a href="/changePassword.php">here </a> to change password.
+                  <!-- Click <a href="/changePassword.php">here </a> to change password. -->
+                  Click <a href="#">here </a> to change password.
                 </div>
               </div>
             </div>

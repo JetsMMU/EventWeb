@@ -132,7 +132,7 @@
 							<input type="hidden" name="eventAttendance" class="input-attendance">
 							<input type="submit" name="" value="&#10004; Going" class="btn going-btn">
 						<?php } else { ?>
-							<a href="/login.php" class="btn btn-default" role="button">&#10004; Going</a>
+							<a href="/EventWeb/login.php" class="btn btn-default" role="button">&#10004; Going</a>
 						<?php } ?>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</form>
