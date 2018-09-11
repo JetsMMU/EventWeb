@@ -78,7 +78,7 @@
             <h3>Upcoming Events</h3>
             <div class="row">
               <?php foreach ($upcomingEvents as $event) { ?>
-                <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal">
+                <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal" onclick='getOrg("<?php echo $_SESSION['username']; ?>", "<?php echo $event['organizer']; ?>")'>
                   <div class="card-body">
                     <h5 class="card-title"><?php echo $event['name']; ?></h5>
                     <p>By: <?php echo $event['organizer']; ?></p>
@@ -113,12 +113,12 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-          <h4 class="modal-title"></h4>
+          <h4 id="EventTitle" class="modal-title"></h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 
 				<div class="modal-body">
-					<p>By: <span class="event-organizer"></span></p>
+          <p>By: <span id="EventOrganizer" class="event-organizer"></span></p>
 					<p>Time: <span class="event-time"></span></p>
 					<p>Date: <span class="event-date"></span></p>
 					<p>Venue: <span class="event-venue"></span></p>
@@ -130,9 +130,9 @@
 						<?php if (isset($_SESSION['username'])) { ?>
 							<input type="hidden" name="eventName" class="input-event-name">
 							<input type="hidden" name="eventAttendance" class="input-attendance">
-							<input type="submit" name="" value="&#10004; Going" class="btn going-btn">
+							<input id = GoingButton type="submit" name="" value="Add to Cart" class="btn going-btn" onclick='addToCart("<?php echo $_SESSION['username']; ?>", "<?php echo $event['name']; ?>")'>
 						<?php } else { ?>
-							<a href="/EventWeb/login.php" class="btn btn-default" role="button">&#10004; Going</a>
+							<a href="/EventWeb/login.php" class="btn btn-default" role="button">Going</a>
 						<?php } ?>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</form>
@@ -142,6 +142,16 @@
 	</div>
 
   <!-- footer -->
-  <?php require('partials/footer.php'); ?>
+  <script>
+    function getOrg($user1, $user2) {
+      var Org = document.getElementById("EventOrganizer").innerHTML;
+      if($user1 == $user2)
+        document.getElementById('GoingButton').setAttribute('value', "Going");
+    }
+    function addToCart($username, $eventname) {
+      $Title = document.getElementById("EventTitle").innerHTML;
+      $sql2 = "SELECT event.id, event.user_id from event inner join user on event.user_id = user.id where user.name = '" + $username + "' && event.name = '" + Title + "'";
+      console.log($sql2);
+  </script>
 </body>
 </html>
