@@ -1,4 +1,4 @@
-<?php
+?php
   session_start();
   
   // Connect to database

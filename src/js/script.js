@@ -223,6 +223,7 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = 'none';
+		$("#submission").attr("disabled",false);
 	}
 	if(num == 2)
 	{
@@ -230,6 +231,7 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = '4px solid black';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = 'none';
+		$("#submission").attr("disabled",false);
 	}
 	if(num == 3)
 	{
@@ -237,6 +239,7 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = '4px solid black';
 		document.getElementById('opt4').style.border = 'none';
+		$("#submission").attr("disabled",false);
 	}
 	if(num == 4)
 	{
@@ -244,5 +247,7 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = '4px solid black';
+		$("#submission").attr("disabled",false);
 	}
 	}
+

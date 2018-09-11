@@ -87,26 +87,36 @@
 <body>
   <!-- header -->
   <?php require('partials/header.php'); ?>
-
+  <div class="container text-center" >
+      <div class="row">
+        <div id="opt1" class="col-md-12" onclick="AddBorder(1);">
+          <img src="/EventWeb/src/img/favicon.ico" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
+      
+    
+      
+        </div>
+      </div>
+  </div>
   <!-- body -->
+  <div class="container text-center" >
   <div class="topBg">
     <!-- <img src="/EventWeb/src/img/favicon.ico" alt="background"> -->
     <h1> @<?php echo $thisuser ?> </h1>
   </div>
-
+</div>
   <div class="middleBg">
     <!-- <h1> @<?php echo $thisuser ?> </h1> -->
   </div>
 
-
+<div class="container text-center" >
   <div class="container">
     <div class="row">
-      <div class="col-md-8 ">
+      <div class="col-md-12 ">
         <form class="form-horizontal" method="POST">
           <fieldset>
             <div class="form-group">
               <label class="col-md-5 control-label" for="full_name">Name (Full name)</label>  
-              <div class="col-md-7">
+              <div class="col-md-12">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-user"></i>
@@ -119,7 +129,7 @@
           <!-- Text input-->
             <div class="form-group">
               <label class="col-md-5 control-label" for="Change Password">Change Your Password</label>
-              <div class="col-md-7">
+              <div class="col-md-12">
                 <div class="profile-padding">
                   <!-- Click <a href="/changePassword.php">here </a> to change password. -->
                   Click <a href="#">here </a> to change password.
@@ -129,7 +139,7 @@
             <br>
             <div class="form-group">
               <label class="col-md-5 control-label" for="dob">Date Of Birth</label>  
-              <div class="col-md-7">
+              <div class="col-md-12">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-birthday-cake"></i>
@@ -141,7 +151,7 @@
             <br>
             <div class="form-group">
               <label class="col-md-5 control-label" for="Gender">Gender</label>
-              <div class="col-md-7"> 
+              <div class="col-md-12"> 
                 <?php  if ($thisgender==null) : ?>
                   <select class="form-control" id="sel1" name="Gender">
                     <option value="Male">Male</option>
@@ -176,7 +186,7 @@
           <!-- Text input-->
             <div class="form-group">
               <label class="col-md-5 control-label" for="Occupation">Occupation</label>  
-              <div class="col-md-7">
+              <div class="col-md-12">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-briefcase"></i>					
@@ -189,7 +199,7 @@
             <!-- Text input-->
             <div class="form-group">
               <label class="col-md-5 control-label" for="phone_number">Phone number </label>  
-              <div class="col-md-7">
+              <div class="col-md-12">
                 <div class="input-group">
                   <div class="input-group-addon">
                     <i class="fa fa-phone"></i>				
@@ -209,7 +219,7 @@
           <!-- Text input-->
             <div class="form-group">
               <label class="col-md-5 control-label" for="Email Address">Email Address</label>  
-                <div class="col-md-7">
+                <div class="col-md-12">
                   <div class="input-group">
                     <div class="input-group-addon">
                       <i class="fa fa-envelope-o"></i>									
@@ -222,7 +232,7 @@
             <!-- Textarea -->
             <div class="form-group">
               <label class="col-md-5 control-label" for="description">Describe yourself (max 200 words)</label>
-              <div class="col-md-7">                     
+              <div class="col-md-12">                     
                 <textarea class="form-control" rows="10"  id="description" name="description" 
                 placeholder="I am an enthusiastic person who is looking forward to provide the best event experience." ><?php echo $thisdescription?></textarea>
               </div>
@@ -230,7 +240,7 @@
 
             <div class="form-group">
               <label class="col-md-5 control-label" ></label>  
-              <div class="col-md-7">
+              <div class="col-md-12">
                 <input type="submit" name="update" class="btn btn-success" value="Update">
               </div>
             </div>			
@@ -239,7 +249,7 @@
       </div>
     </div>
   </div>
-  
+</div>
   <!-- footer -->
   <?php require('partials/footer.php'); ?>
 </body>

@@ -92,6 +92,13 @@ else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isse
 	header('location: createEvent.php');
 }
 
+else if(isset($_POST['hello'])) {
+	$todelete = (int)$_POST['hello'];
+	$sql = "DELETE FROM cart where cart.user_id = $todelete ";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	header('location: PaymentSuccess.php');
+}
 // for undefined behaviour
 else {
 	header('location: home.php');

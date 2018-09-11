@@ -9,11 +9,12 @@
     die($e->getMessage());
   }
   
+  $currentuser = $_SESSION['username'];
   // Retrieve events and their organizers
-  $sql = 'SELECT event.name, event.date, event.time, event.description, event.price, user.name AS organizer
-  FROM event
-  INNER JOIN user ON event.user_id = user.id
-  ORDER BY event.date desc';
+  $sql = "SELECT event.name, event.description, event.date, event.time, event.price, cart.id, cart.user_id
+  FROM event 
+  INNER JOIN cart ON cart.id = event.id
+  INNER JOIN user ON cart.user_id = user.id WHERE user.name = '$currentuser' ";
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $events = $stmt->fetchAll();
@@ -21,6 +22,7 @@
   // Array to store all of the contents in cart
   $cartContents = [];
   $totalprice = [];
+  $cartid = [];
 
   foreach ($events as $event) {
       array_push($cartContents, $event);
@@ -29,8 +31,12 @@
   foreach ($events as $event) {
       array_push($totalprice, $event{"price"});
   }
-?>
 
+  foreach ($events as $event) {
+      array_push($cartid, $event{"id"});
+  }
+
+?>
 
 
 
@@ -103,6 +109,8 @@
             <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal">
               <div class="card-body">
                 <p><h5>Event Name:</h5> <?php echo $event['name'];?></p> 
+                <p><h5>Date:</h5> <?php echo $event['date'];?></p> 
+                <p><h5>Time:</h5> <?php echo $event['time'];?></p> 
                 <p><h5>Description:</h5> <?php echo $event['description']; ?></p>
                 <p><h5>Price:</h5> <?php echo $event['price']; ?></p>
               </div>
@@ -124,14 +132,20 @@
 </div>
 </div>
 
+
   <div class="container text-right">
     <div class="row">
-    <div class="col-sm-12">
-    <button type="submit" class="btn btn-default">Submit</button>
-    <button type="cancel" class="btn btn-default">Cancel</button>
-  </div>
+    <div class="col-sm-11">
+    <form method="POST" action="api.php">
+      <button id="submission" type="submit" class="btn btn-default" disabled>Submit
+        <input type="hidden" name="hello" value=" <?php echo $event{"user_id"}; ?>"/> 
+      </button>
+    </form>
+    </div>
+    <a href="/EventWeb/cart.php"><button type="cancel" class="btn btn-default">Cancel</button></a>
   </div>
 </div>
+
   <!-- footer -->
   <?php require('partials/footer.php'); ?>
 </body>
