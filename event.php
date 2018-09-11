@@ -14,7 +14,7 @@
   }
   
   // Retrieve events and their organizers
-  $sql = 'SELECT event.name, event.date, event.time, user.name AS organizer
+  $sql = 'SELECT event.id, event.user_id, event.name, event.date, event.time, user.name AS organizer
   FROM event
   INNER JOIN user ON event.user_id = user.id
   ORDER BY event.date desc';
@@ -36,6 +36,35 @@
     } else {
       array_push($pastEvents, $event);
     }
+  }
+
+  $sql = 'SELECT participation.event_id, participation.user_id, event.name AS eventname, user.name AS username FROM participation 
+  INNER JOIN event ON event.id = participation.event_id
+  INNER JOIN user ON user.id = participation.user_id';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $participations = $stmt->fetchAll();
+
+  $participationList = [];
+
+  foreach ($participations as $participation) {
+    array_push($participationList, $participation);
+  }
+
+  $sql = 'SELECT id FROM user where name = "' . $_SESSION['username'] . '"';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $curID = $stmt->fetchColumn();
+
+  $sql = 'SELECT * FROM cart';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $carts = $stmt->fetchAll();
+
+  $cartList = [];
+
+  foreach ($carts as $cart) {
+    array_push($cartList, $cart);
   }
 ?>
 
@@ -78,12 +107,17 @@
             <h3>Upcoming Events</h3>
             <div class="row">
               <?php foreach ($upcomingEvents as $event) { ?>
-                <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal" onclick='getOrg("<?php echo $_SESSION['username']; ?>", "<?php echo $event['organizer']; ?>")'>
+                <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal" onclick='getOrg("<?php echo $_SESSION['username']; ?>", "<?php echo $event['organizer']; ?>", "<?php echo $curID ?>", "<?php echo $event['id']; ?>" , <?php echo json_encode($participationList); ?>, <?php echo json_encode($cartList); ?>)'>
                   <div class="card-body">
                     <h5 class="card-title"><?php echo $event['name']; ?></h5>
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
+                    Participants: 
+                    <?php foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { ?>
+                      <p><?php echo $participant['username']; ?></p>
+                      <?php } ?>
+                    <?php } ?>
                   </div>
                 </div>
               <?php } ?>
@@ -99,6 +133,11 @@
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
+                    Participants: 
+                    <?php foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { ?>
+                      <p><?php echo $participant['username']; ?></p>
+                      <?php } ?>
+                    <?php } ?>
                   </div> 
                 </div>
               <?php } ?>
@@ -130,7 +169,7 @@
 						<?php if (isset($_SESSION['username'])) { ?>
 							<input type="hidden" name="eventName" class="input-event-name">
 							<input type="hidden" name="eventAttendance" class="input-attendance">
-							<input id = GoingButton type="submit" name="" value="Add to Cart" class="btn going-btn" onclick='addToCart("<?php echo $_SESSION['username']; ?>", "<?php echo $event['name']; ?>")'>
+              <input id = GoingButton type="submit" name="eventAttendee" value="Add to Cart" class="btn going-btn">
 						<?php } else { ?>
 							<a href="/EventWeb/login.php" class="btn btn-default" role="button">Going</a>
 						<?php } ?>

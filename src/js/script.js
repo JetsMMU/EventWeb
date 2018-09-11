@@ -28,22 +28,22 @@ if (filename === '/EventWeb/event.php') {
 		}
 
 		// Inputs
-		if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
-			modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
-		} else { // Show going button
-			modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
-			var goingButton = modalContent.getElementsByClassName('going-btn')[0];
-			goingButton.classList.remove('hidden');
-			if (eventDetail['attendance']) { // Make going button blue
-				goingButton.classList.remove('btn-default');
-				goingButton.classList.add('btn-primary');
-				modalContent.getElementsByClassName('input-attendance')[0].value = true;
-			} else { // Make going button white
-				goingButton.classList.remove('btn-primary');
-				goingButton.classList.add('btn-default');
-				modalContent.getElementsByClassName('input-attendance')[0].value = false;
-			}
-		}
+		// if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
+		// 	modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
+		// } else { // Show going button
+		// 	modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
+		// 	var goingButton = modalContent.getElementsByClassName('going-btn')[0];
+		// 	goingButton.classList.remove('hidden');
+		// 	if (eventDetail['attendance']) { // Make going button blue
+		// 		goingButton.classList.remove('btn-default');
+		// 		goingButton.classList.add('btn-primary');
+		// 		modalContent.getElementsByClassName('input-attendance')[0].value = true;
+		// 	} else { // Make going button white
+		// 		goingButton.classList.remove('btn-primary');
+		// 		goingButton.classList.add('btn-default');
+		// 		modalContent.getElementsByClassName('input-attendance')[0].value = false;
+		// 	}
+		// }
 	};
 
 	// Reference: https://stackoverflow.com/questions/22119673
@@ -250,19 +250,30 @@ function AddBorder(num) {
 		$("#submission").attr("disabled",false);
 	}
 	}
-/*
-<<<<<<< HEAD
-=======
-function addToCart($username, $eventname) {
-      $Title = document.getElementById("EventTitle").innerHTML;
-      $sql2 = "SELECT event.id, event.user_id from event inner join user on event.user_id = user.id where user.name = '" + $username + "' && event.name = '" + Title + "'";
-      console.log($sql2);
-    }
-    
-function getOrg($user1, $user2) {
-  var Org = document.getElementById("EventOrganizer").innerHTML;
-  if($user1 == $user2)
-    document.getElementById('GoingButton').setAttribute('value', "Going");
+
+function getOrg(user1, user2, userid, event, PartList, CartList) {
+	var Org = document.getElementById("EventOrganizer").innerHTML;
+
+	if(user1 == user2) {
+		document.getElementById('GoingButton').setAttribute('value', "Going");
+		$("#GoingButton").attr("disabled",true);
+	}
+	else {
+		var flag = 0;
+		for (carts in CartList) {
+			if(userid === CartList[carts].user_id && event === CartList[carts].id) {
+				document.getElementById('GoingButton').setAttribute('value', "In Cart");
+				$("#GoingButton").attr("disabled",true);
+				flag = 1;
+			}
+		}
+		if(flag == 1) {
+			for (participants in PartList) {
+				if(userid === PartList[participants].user_id && event === PartList[participants].event_id) {
+					document.getElementById('GoingButton').setAttribute('value', "Going");
+					$("#GoingButton").attr("disabled",true);
+				}
+			}
+		}
+	}
 }
->>>>>>> 8fec69d0966de0e125b3d3cada90214fb9c48470
-*/

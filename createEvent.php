@@ -64,6 +64,10 @@
 				<label for="eventVenue">Event Venue: </label>
 				<input type="text" name="eventVenue" class="form-control" id="eventVenue">
 			</div>
+			<div class="form-group">
+				<label for="eventPrice">Event Price: </label>
+				<input type="text" name="eventPrice" class="form-control" id="eventVenue">
+			</div>
 			<button type="submit" class="btn btn-default">Create</button>
 		</form>
 	</div>

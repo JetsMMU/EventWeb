@@ -57,28 +57,43 @@ else if (isset($_GET['eventName'])) {
 	}
 } 
 else if (isset($_POST['eventName']) && isset($_POST['eventAttendance'])) {
-	if ($_POST['eventAttendance'] === 'true') { // User doesn't want to attend, remove row
-		$_SESSION['eventAttendanceMessage'] = 'You have choose to not attend ' . $_POST['eventName'] . '.';
-		$sql = 'DELETE FROM participation
-			WHERE event_id = (SELECT id FROM event WHERE name = :eventname)
-			AND user_id = (SELECT id FROM user WHERE name = :username)';
-	} else if ($_POST['eventAttendance'] === 'false') { // User wants to attend, insert row
-		$_SESSION['eventAttendanceMessage'] = 'You have choose to attend ' . $_POST['eventName'] . '.';
-		$sql = 'INSERT INTO participation (event_id, user_id)
-			VALUES ((SELECT id FROM event WHERE name = :eventname),
-			(SELECT id FROM user WHERE name = :username))';
-	} else { // Undefined behaviour
+	if($_POST['eventAttendee'] == 'Add to Cart') {
+		// $sql = 'INSERT INTO participation (event_id, user_id)
+		// 	VALUES ((SELECT id FROM event WHERE name = "' . $_POST['eventName'] . '"),
+		// 	(SELECT id FROM user WHERE name = "' . $_SESSION['username']  . '"))';
+		$sql = 'INSERT INTO cart (id, user_id)
+		VALUES ((SELECT id FROM user WHERE name = :username), (SELECT id FROM event WHERE name = :name))';
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute([
+			'username' => $_SESSION['username'],
+			'name' => $_POST['eventName']
+		]);
+		$_SESSION['eventAttendanceMessage'] =  $_POST['eventName'] . ' has been added to the cart.';
+	}
+	else { // Undefined behaviour
 		die($_POST['eventAttendance']);
 	}
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute(['eventname' => $_POST['eventName'], 'username' => $_SESSION['username']]);
+	// if ($_POST['eventAttendance'] === 'true') { // User doesn't want to attend, remove row
+	// $_SESSION['eventAttendanceMessage'] = 'You have choose to not attend ' . $_POST['eventName'] . '.';
+	// $sql = 'DELETE FROM participation
+	// 	WHERE event_id = (SELECT id FROM event WHERE name = :eventname)
+	// 	AND user_id = (SELECT id FROM user WHERE name = :username)';
+	// } else if ($_POST['eventAttendance'] === 'false') { // User wants to attend, insert row
+	// 	$_SESSION['eventAttendanceMessage'] = 'You have choose to attend ' . $_POST['eventName'] . '.';
+	// 	$sql = 'INSERT INTO participation (event_id, user_id)
+	// 		VALUES ((SELECT id FROM event WHERE name = :eventname),
+	// 		(SELECT id FROM user WHERE name = :username))';
+	// } else { // Undefined behaviour
+	// 	die($_POST['eventAttendance']);
+	// }
+	// $stmt->execute(['eventname' => $_POST['eventName'], 'username' => $_SESSION['username']]);
 	header('location: event.php');
 }
 
 // for create-event.php
-else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isset($_POST['eventDate']) && isset($_POST['eventTime']) && isset($_POST['eventVenue'])) {
-	$sql = 'INSERT INTO event (name, description, date, time, venue, user_id)
-		VALUES (:name, :description, :date, :time, :venue, (SELECT id FROM user WHERE name = :username))';
+else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isset($_POST['eventDate']) && isset($_POST['eventTime']) && isset($_POST['eventVenue']) && isset($_POST['eventPrice'])) {
+	$sql = 'INSERT INTO event (name, description, date, time, venue, user_id, price)
+		VALUES (:name, :description, :date, :time, :venue, (SELECT id FROM user WHERE name = :username), :price)';
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute([
 		'name' => $_POST['eventName'],
@@ -86,8 +101,13 @@ else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isse
 		'date' => date("Y-m-d", strtotime($_POST['eventDate'])),
 		'time' => $_POST['eventTime'],
 		'venue' => $_POST['eventVenue'],
-		'username' => $_SESSION['username']
+		'username' => $_SESSION['username'],
+		'price' => $_POST['eventPrice']
 	]);
+	$sql = 'INSERT INTO participation VALUES ((SELECT max(id) from event), (SELECT user_id FROM event WHERE id = (select max(id) from event)))';
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+
 	$_SESSION['createEventMessage'] = $_POST['eventName'] . ' is created.';
 	header('location: createEvent.php');
 }
