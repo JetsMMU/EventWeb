@@ -142,16 +142,6 @@
 	</div>
 
   <!-- footer -->
-  <script>
-    function getOrg($user1, $user2) {
-      var Org = document.getElementById("EventOrganizer").innerHTML;
-      if($user1 == $user2)
-        document.getElementById('GoingButton').setAttribute('value', "Going");
-    }
-    function addToCart($username, $eventname) {
-      $Title = document.getElementById("EventTitle").innerHTML;
-      $sql2 = "SELECT event.id, event.user_id from event inner join user on event.user_id = user.id where user.name = '" + $username + "' && event.name = '" + Title + "'";
-      console.log($sql2);
-  </script>
+  <?php require('partials/footer.php'); ?>
 </body>
 </html>
