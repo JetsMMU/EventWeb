@@ -250,7 +250,7 @@ function AddBorder(num) {
 		$("#submission").attr("disabled",false);
 	}
 	}
-
+/*
 <<<<<<< HEAD
 =======
 function addToCart($username, $eventname) {
@@ -265,3 +265,4 @@ function getOrg($user1, $user2) {
     document.getElementById('GoingButton').setAttribute('value', "Going");
 }
 >>>>>>> 8fec69d0966de0e125b3d3cada90214fb9c48470
+*/

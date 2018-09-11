@@ -67,7 +67,7 @@
     
     <div class="row">
     <div id="opt1" class="col-md-2" onclick="AddBorder(1);">
-     <figure  class="figure" align="center" onclick="addborder();" >
+     <figure  class="figure" align="center">
         <img src="/EventWeb/src/img/maybank.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
 
         <figcaption class="figure-caption">Maybank2u.</figcaption>
