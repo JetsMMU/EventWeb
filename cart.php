@@ -14,19 +14,16 @@
   }
   
   // Retrieve events and their organizers
-  $sql = 'SELECT event.id, event.name, event.date, event.time, event.description, event.price, user.name AS organizer
-  FROM event
-  INNER JOIN user ON event.user_id = user.id
-  ORDER BY event.date desc';
+  $sql = 'SELECT cart.id, event.name, event.description, event.price FROM cart INNER JOIN event ON cart.id = event.id';
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
-  $events = $stmt->fetchAll();
+  $carts = $stmt->fetchAll();
 
   // Array to store all of the contents in cart
   $cartContents = [];
 
-  foreach ($events as $event) {
-      array_push($cartContents, $event);
+  foreach ($carts as $cart) {
+      array_push($cartContents, $cart);
   }
 ?>
 
@@ -52,12 +49,12 @@
               <th>Event Description</th>
               <th>Price</th>
             </tr>
-            <?php foreach ($cartContents as $event) { ?>
+            <?php foreach ($cartContents as $cart) { ?>
             <tr>
-              <td><input type="checkbox" id="<?php echo $event['id'];?>" onclick="getTotal(<?php echo $event['price']; ?>, <?php echo $event['id']; ?>)"></td>
-              <td><?php echo $event['name'];?></td> 
-              <td><?php echo $event['description']; ?></td>
-              <td><?php echo $event['price']; ?></td>
+              <td><input type="checkbox" id="<?php echo $cart['id'];?>" onclick="getTotal(<?php echo $cart['price']; ?>, <?php echo $cart['id']; ?>)"></td>
+              <td><?php echo $cart['name'];?></td> 
+              <td><?php echo $cart['description']; ?></td>
+              <td><?php echo $cart['price']; ?></td>
             </tr>
             <?php } ?>
             <tr>

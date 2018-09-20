@@ -57,12 +57,9 @@ else if (isset($_GET['eventName'])) {
 	}
 } 
 else if (isset($_POST['eventName']) && isset($_POST['eventAttendance'])) {
-	if($_POST['eventAttendee'] == 'Add to Cart') {
-		// $sql = 'INSERT INTO participation (event_id, user_id)
-		// 	VALUES ((SELECT id FROM event WHERE name = "' . $_POST['eventName'] . '"),
-		// 	(SELECT id FROM user WHERE name = "' . $_SESSION['username']  . '"))';
+	if($_POST['eventAttendee'] === 'Add to Cart') {
 		$sql = 'INSERT INTO cart (id, user_id)
-		VALUES ((SELECT id FROM user WHERE name = :username), (SELECT id FROM event WHERE name = :name))';
+		VALUES ((SELECT id FROM user WHERE name = "'. $_SESSION['username'] .'"), (SELECT id FROM event WHERE name = "' . $_POST['eventName'] .'"))';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute([
 			'username' => $_SESSION['username'],

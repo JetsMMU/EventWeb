@@ -28,6 +28,12 @@ if (filename === '/EventWeb/event.php') {
 		}
 
 		// Inputs
+		if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
+			modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
+		} else {
+		modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
+		}
+		// Inputs
 		// if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
 		// 	modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
 		// } else { // Show going button
@@ -252,28 +258,38 @@ function AddBorder(num) {
 	}
 
 function getOrg(user1, user2, userid, event, PartList, CartList) {
+	var modalContent = document.getElementsByClassName('modal-content')[0];
 	var Org = document.getElementById("EventOrganizer").innerHTML;
-
+	var goingButton = modalContent.getElementsByClassName('going-btn')[0];
 	if(user1 == user2) {
 		document.getElementById('GoingButton').setAttribute('value', "Going");
 		$("#GoingButton").attr("disabled",true);
+		goingButton.classList.add('btn-primary');
+		goingButton.classList.remove('btn-default');
 	}
 	else {
 		var flag = 0;
-		for (carts in CartList) {
-			if(userid === CartList[carts].user_id && event === CartList[carts].id) {
-				document.getElementById('GoingButton').setAttribute('value', "In Cart");
+		for (participants in PartList) {
+			if(userid === PartList[participants].user_id && event === PartList[participants].event_id) {
+				document.getElementById('GoingButton').setAttribute('value', "Going");
 				$("#GoingButton").attr("disabled",true);
+				goingButton.classList.add('btn-primary');
+				goingButton.classList.remove('btn-default');
 				flag = 1;
 			}
 		}
-		if(flag == 1) {
-			for (participants in PartList) {
-				if(userid === PartList[participants].user_id && event === PartList[participants].event_id) {
-					document.getElementById('GoingButton').setAttribute('value', "Going");
+
+		if(flag == 0) {
+			for (carts in CartList) {
+				if(CartList[carts].user_id == Number(event) && CartList[carts].id == Number(userid)) {
+					document.getElementById('GoingButton').setAttribute('value', "In Cart");
 					$("#GoingButton").attr("disabled",true);
+					goingButton.classList.add('btn-primary');
+					goingButton.classList.remove('btn-default');
 				}
 			}
 		}
+		
+		
 	}
 }
