@@ -222,14 +222,18 @@ if (filename === '/EventWeb/event.php') {
   	}
 }
 
-function AddBorder(num) { 
+function AddBorder(num, arraysize) { 
 	if(num == 1)
 	{
 		document.getElementById('opt1').style.border = '4px solid black';
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = 'none';
-		$("#submission").attr("disabled",false);
+		if (arraysize > 0)
+		{
+			$("#submission").attr("disabled",false);	
+		}
+		
 	}
 	if(num == 2)
 	{
@@ -237,7 +241,10 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = '4px solid black';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = 'none';
-		$("#submission").attr("disabled",false);
+		if (arraysize > 0)
+		{
+			$("#submission").attr("disabled",false);	
+		}
 	}
 	if(num == 3)
 	{
@@ -245,7 +252,10 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = '4px solid black';
 		document.getElementById('opt4').style.border = 'none';
-		$("#submission").attr("disabled",false);
+		if (arraysize > 0)
+		{
+			$("#submission").attr("disabled",false);	
+		}
 	}
 	if(num == 4)
 	{
@@ -253,7 +263,10 @@ function AddBorder(num) {
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = '4px solid black';
-		$("#submission").attr("disabled",false);
+		if (arraysize > 0)
+		{
+			$("#submission").attr("disabled",false);	
+		}
 	}
 	}
 

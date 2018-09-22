@@ -13,8 +13,8 @@
   // Retrieve events and their organizers
   $sql = "SELECT event.name, event.description, event.date, event.time, event.price, cart.id, cart.user_id
   FROM event 
-  INNER JOIN cart ON cart.id = event.id
-  INNER JOIN user ON cart.user_id = user.id WHERE user.name = '$currentuser' ";
+  INNER JOIN cart ON cart.id = event.id 
+  INNER JOIN user ON cart.user_id = user.id WHERE user.name = '$currentuser' and cart.activation = 1";
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $events = $stmt->fetchAll();
@@ -47,11 +47,10 @@
 
 
 
-
 </head>
 <body>
   <!-- header -->
-  <?php require('partials/header.php'); ?>
+    <?php require('partials/header.php'); ?>
 
   <!-- body -->
   <div class="container text-left">
@@ -66,7 +65,7 @@
 <div class="container text-left" >
     
     <div class="row">
-    <div id="opt1" class="col-md-2" onclick="AddBorder(1);">
+    <div id="opt1" class="col-md-2" onclick="AddBorder(1, <?php echo sizeof($cartContents);?>);">
      <figure  class="figure" align="center">
         <img src="/EventWeb/src/img/maybank.png" class="figure-img img-fluid rounded" alt="A generic square placeholder image with rounded corners in a figure.">
 
@@ -77,21 +76,21 @@
     </div>
 
 
-    <div id="opt2" class="col-md-2" onclick="AddBorder(2);">
+    <div id="opt2" class="col-md-2" onclick="AddBorder(2, <?php echo sizeof($cartContents);?>);">
       <figure class="figure" align="center">
         <img src="/EventWeb/src/img/cimbclick.png" class="figure-img img-fluid rounded" class="center" alt="A generic square placeholder image with rounded corners in a figure.">
         <figcaption class="figure-caption"; >CIMB Clicks.</figcaption>
       </figure>
     </div>
     
-    <div id="opt3" class="col-md-2" onclick="AddBorder(3);">
+    <div id="opt3" class="col-md-2" onclick="AddBorder(3, <?php echo sizeof($cartContents);?>);">
       <figure class="figure" align="center">
         <img src="/EventWeb/src/img/visa.png" class="figure-img img-fluid rounded" class="center" alt="A generic square placeholder image with rounded corners in a figure.">
         <figcaption class="figure-caption"; >Visa.</figcaption>
       </figure>
     </div>
 
-    <div id="opt4" class="col-md-2" onclick="AddBorder(4);">
+    <div id="opt4" class="col-md-2" onclick="AddBorder(4, <?php echo sizeof($cartContents);?>);">
       <figure class="figure" align="center" >
         <img src="/EventWeb/src/img/mastercard.png" class="figure-img img-fluid rounded" class="center" alt="A generic square placeholder image with rounded corners in a figure.">
         <figcaption class="figure-caption"; >Master Card.</figcaption>
@@ -138,11 +137,15 @@
     <div class="col-sm-11">
     <form method="POST" action="api.php">
       <button id="submission" type="submit" class="btn btn-default" disabled>Submit
-        <input type="hidden" name="hello" value=" <?php echo $event{"user_id"}; ?>"/> 
+        <input type="hidden" name="paynow" value=" <?php echo $event{"user_id"}; ?>"/> 
       </button>
     </form>
     </div>
-    <a href="/EventWeb/cart.php"><button type="cancel" class="btn btn-default">Cancel</button></a>
+    <form method="POST" action="api.php">
+      <button id="submission" type="submit" class="btn btn-default">Cancel
+        <input type="hidden" name="reset" value=" <?php echo $event{"user_id"}; ?>"/> 
+      </button>
+    </form>
   </div>
 </div>
 

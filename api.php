@@ -92,12 +92,20 @@ else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isse
 	header('location: createEvent.php');
 }
 
-else if(isset($_POST['hello'])) {
-	$todelete = (int)$_POST['hello'];
-	$sql = "DELETE FROM cart where cart.user_id = $todelete ";
-	$stmt = $pdo->prepare($sql);
-	$stmt->execute();
-	header('location: PaymentSuccess.php');
+else if(isset($_POST['paynow'])) {
+		$todelete = (int)$_POST['paynow'];
+		$sql = "DELETE FROM cart where cart.user_id = $todelete AND cart.activation = 1";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		header('location: PaymentSuccess.php');
+}
+
+else if(isset($_POST['reset'])) {
+		$toreset = (int)$_POST['reset'];
+		$sql = "UPDATE cart SET cart.activation = 0 WHERE cart.user_id = $toreset ";
+		$stmt = $pdo->prepare($sql);
+		$stmt->execute();
+		header('location: cart.php');	
 }
 
 else if (isset($_POST['removeButton']) && isset($_POST['CartDelete']) && isset($_POST['eventName'])) {
@@ -118,4 +126,8 @@ else if (isset($_POST['checkoutButton']) && isset($_POST['CartList'])) {
 // for undefined behaviour
 else {
 	header('location: home.php');
+	$sql = 'UPDATE cart SET cart.activation = 0 WHERE cart.user_id = 8 ';
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	header('location: cart.php');
 }
