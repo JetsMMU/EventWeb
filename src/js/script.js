@@ -31,7 +31,7 @@ if (filename === '/EventWeb/event.php') {
 		if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
 			modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
 		} else {
-		modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
+			modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
 		}
 		// Inputs
 		// if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
@@ -281,7 +281,7 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 
 		if(flag == 0) {
 			for (carts in CartList) {
-				if(CartList[carts].user_id == Number(event) && CartList[carts].id == Number(userid)) {
+				if(CartList[carts].user_id == Number(userid) && CartList[carts].id == Number(event)) {
 					document.getElementById('GoingButton').setAttribute('value', "In Cart");
 					$("#GoingButton").attr("disabled",true);
 					goingButton.classList.add('btn-primary');
@@ -289,7 +289,30 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 				}
 			}
 		}
-		
-		
 	}
+}
+
+var total = 0;
+var checkboxes = 0;
+$selectedCart = [];
+function getTotal($a, $b) {
+  var checkBox = document.getElementById($b);
+  if (checkBox.checked == true){
+    total = total + $a;
+    checkboxes++;
+    $selectedCart.push($b);
+  } else {
+    total = total - $a;
+    checkboxes--;
+    $selectedCart.splice( $selectedCart.indexOf($b), 1 );
+  }
+  document.getElementById("totalprice").innerHTML = total.toFixed(2);
+  if(checkboxes > 0)
+  {
+    $("#checkoutButton").attr("disabled",false);
+  }
+  else
+  {
+    $("#checkoutButton").attr("disabled",true);
+  }
 }

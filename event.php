@@ -14,7 +14,7 @@
   }
   
   // Retrieve events and their organizers
-  $sql = 'SELECT event.id, event.user_id, event.name, event.date, event.time, user.name AS organizer
+  $sql = 'SELECT event.id, event.user_id, event.name, event.date, event.time, event.price, user.name AS organizer
   FROM event
   INNER JOIN user ON event.user_id = user.id
   ORDER BY event.date desc';
@@ -113,11 +113,11 @@
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
-                    Participants: 
-                    <?php foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { ?>
-                      <p><?php echo $participant['username']; ?></p>
-                      <?php } ?>
-                    <?php } ?>
+                    <p>Price: <?php echo $event['price']; ?></p>
+                    Participants:
+                    <p>
+                    <?php $temp = 0; foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { $temp++; }} echo $temp; ?>
+                    </p>
                   </div>
                 </div>
               <?php } ?>
@@ -133,6 +133,7 @@
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
+                    <p>Price: <?php echo $event['price']; ?></p>
                     Participants: 
                     <?php foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { ?>
                       <p><?php echo $participant['username']; ?></p>

@@ -31,6 +31,10 @@
 <html lang="en">
 <head>
   <?php require('partials/html-head.php'); ?>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
   <!-- header -->
@@ -39,6 +43,17 @@
 
   <!-- body -->
   <div class="container">
+    <div class="row">
+      <div class="col">
+        <?php if (isset($_SESSION['cartMessage'])) { ?>
+          <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> <?php echo $_SESSION['cartMessage']; ?>
+          </div>
+        <?php } ?>
+        <?php unset($_SESSION['cartMessage']); ?>
+      </div>
+    </div>
     <div class="row">
       <div class="col">
             <h3>My Cart</h3>
@@ -55,6 +70,13 @@
               <td><?php echo $cart['name'];?></td> 
               <td><?php echo $cart['description']; ?></td>
               <td><?php echo $cart['price']; ?></td>
+              <td>
+                <form method="POST" action="api.php">
+                    <input type="hidden" name="eventName" class="input-event-name">
+                    <input type="hidden" name = "CartDelete" value = <?php echo $cart['id']; ?> >
+                    <td><input id = <?php echo $cart['id']; ?> type="submit" value="Remove" name="removeButton" class="btn btn-default"></td>
+                </form>
+              </td>
             </tr>
             <?php } ?>
             <tr>
@@ -65,8 +87,11 @@
             </tr>
             </table>
             <div align="right">
-            <td><button id="removeButton" type="button" class="btn btn-default" disabled>Remove</button></td>
-            <td><button id="checkoutButton" type="button" class="btn btn-default" disabled>Checkout</button></td>
+              <div class="modal-footer">
+                <form method="POST" action="api.php">
+                    <td><input id="checkoutButton" type="button" value="Checkout" name="checkoutButton" class="btn btn-default" disabled></td>
+                </form>
+              </div>
           </div>
         </div>		
       </div>
@@ -75,31 +100,5 @@
 
   <!-- footer -->
   <?php require('partials/footer.php'); ?>
-
-  <script>
-    var total = 0;
-    var checkboxes = 0;
-    function getTotal($a, $b) {
-      var checkBox = document.getElementById($b);
-      if (checkBox.checked == true){
-        total = total + $a;
-        checkboxes++;
-      } else {
-        total = total - $a;
-        checkboxes--;
-      }
-      document.getElementById("totalprice").innerHTML = total.toFixed(2);
-      if(checkboxes > 0)
-      {
-        $("#removeButton").attr("disabled",false);
-        $("#checkoutButton").attr("disabled",false);
-      }
-      else
-      {
-        $("#removeButton").attr("disabled",true);
-        $("#checkoutButton").attr("disabled",true);
-      }
-    }
-  </script>
 </body>
 </html>
