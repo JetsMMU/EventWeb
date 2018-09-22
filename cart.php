@@ -13,6 +13,10 @@
 		die($e->getMessage());
   }
   
+  $sql = 'UPDATE cart SET activation = 0';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+
   // Retrieve events and their organizers
   $sql = 'SELECT cart.id, event.name, event.description, event.price FROM cart INNER JOIN event ON cart.id = event.id';
   $stmt = $pdo->prepare($sql);
@@ -31,10 +35,6 @@
 <html lang="en">
 <head>
   <?php require('partials/html-head.php'); ?>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
   <!-- header -->
@@ -66,7 +66,7 @@
             </tr>
             <?php foreach ($cartContents as $cart) { ?>
             <tr>
-              <td><input type="checkbox" id="<?php echo $cart['id'];?>" onclick="getTotal(<?php echo $cart['price']; ?>, <?php echo $cart['id']; ?>)"></td>
+              <td><input type="checkbox" id="<?php echo $cart['id'];?>" onclick="getTotal(<?php echo $cart['price']; ?>, <?php echo $cart['id']; ?>, <?php echo json_encode($_SESSION['selectedCart']) ?>)"></td>
               <td><?php echo $cart['name'];?></td> 
               <td><?php echo $cart['description']; ?></td>
               <td><?php echo $cart['price']; ?></td>
@@ -89,7 +89,9 @@
             <div align="right">
               <div class="modal-footer">
                 <form method="POST" action="api.php">
-                    <td><input id="checkoutButton" type="button" value="Checkout" name="checkoutButton" class="btn btn-default" disabled></td>
+                    <input type="hidden" name="eventName" class="input-event-name">
+                    <input id="selectedCart" type="hidden" name="cartList" value = "">
+                    <input id="checkoutButton" type="submit" value="Checkout" name="checkoutButton" class="btn btn-default" disabled>
                 </form>
               </div>
           </div>

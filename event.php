@@ -134,11 +134,10 @@
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
                     <p>Price: <?php echo $event['price']; ?></p>
-                    Participants: 
-                    <?php foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { ?>
-                      <p><?php echo $participant['username']; ?></p>
-                      <?php } ?>
-                    <?php } ?>
+                    Participants:
+                    <p>
+                    <?php $temp = 0; foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { $temp++; }} echo $temp; ?>
+                    </p>
                   </div> 
                 </div>
               <?php } ?>

@@ -299,8 +299,16 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 					$("#GoingButton").attr("disabled",true);
 					goingButton.classList.add('btn-primary');
 					goingButton.classList.remove('btn-default');
+					flag = 1;
 				}
 			}
+		}
+
+		if(flag == 0) {
+			document.getElementById('GoingButton').setAttribute('value', "Add to Cart");
+			$("#GoingButton").attr("disabled",false);
+			goingButton.classList.add('btn-default');
+			goingButton.classList.remove('btn-primary');
 		}
 	}
 }
@@ -308,7 +316,7 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 var total = 0;
 var checkboxes = 0;
 $selectedCart = [];
-function getTotal($a, $b) {
+function getTotal($a, $b, $c) {
   var checkBox = document.getElementById($b);
   if (checkBox.checked == true){
     total = total + $a;
@@ -328,4 +336,5 @@ function getTotal($a, $b) {
   {
     $("#checkoutButton").attr("disabled",true);
   }
+  document.getElementById("selectedCart").setAttribute('value', $selectedCart);
 }
