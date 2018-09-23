@@ -1,7 +1,7 @@
 $(document).ready(printYear);
 
-function printYear(){
-  $("#year").text(new Date().getFullYear());
+function printYear() {
+	$("#year").text(new Date().getFullYear());
 }
 
 var links = document.getElementsByClassName('navbar-nav')[0].getElementsByTagName("a");
@@ -73,8 +73,8 @@ if (filename === '/EventWeb/event.php') {
 
 		// AJAX's GET request to retrieve details of this specific event
 		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'api.php?eventName='+eventName);
-		xhr.onload = function() {
+		xhr.open('GET', 'api.php?eventName=' + eventName);
+		xhr.onload = function () {
 			if (xhr.status === 200) {
 				var isEventEnded = findAncestor(e.target, 'tab-pane').id === 'past';
 				setEventModal(eventName, JSON.parse(xhr.responseText), isEventEnded);
@@ -89,54 +89,54 @@ if (filename === '/EventWeb/event.php') {
 	var eventsWrapper = document.getElementsByClassName('tab-content')[0];
 	eventsWrapper.addEventListener('click', eventWellHandler);
 } else if (filename === '/EventWeb/dashboard.php') {
-    function setEventModal(eventName, attendees) {
-        var modalContent = document.getElementsByClassName('modal-content')[0];
+	function setEventModal(eventName, attendees) {
+		var modalContent = document.getElementsByClassName('modal-content')[0];
 		modalContent.getElementsByClassName('modal-title')[0].textContent = eventName;
-        
-        console.log(document.getElementsByClassName('modal-content'));
-        console.log(modalContent.getElementsByClassName('modal-title')[0].textContent);
-        
+
+		console.log(document.getElementsByClassName('modal-content'));
+		console.log(modalContent.getElementsByClassName('modal-title')[0].textContent);
+
 		if (attendees === "ERROR: No such attendees/event.") {
-            modalContent.getElementsByClassName('attendees-count')[0].textContent = 0;
+			modalContent.getElementsByClassName('attendees-count')[0].textContent = 0;
 			return;
 		}
-        modalContent.getElementsByClassName('attendees-count')[0].textContent = attendees.length;
-        
-        var ul = document.getElementById('attendees_list');
-        var list = "";
-        for (var i = 0; i < attendees.length; i++) {
-            list += "<li class='list-group-item'>" + attendees[i]['name'] + "</li>";
-        }
-        ul.innerHTML = list;
+		modalContent.getElementsByClassName('attendees-count')[0].textContent = attendees.length;
+
+		var ul = document.getElementById('attendees_list');
+		var list = "";
+		for (var i = 0; i < attendees.length; i++) {
+			list += "<li class='list-group-item'>" + attendees[i]['name'] + "</li>";
+		}
+		ul.innerHTML = list;
 	};
 
 	function eventWellHandler(e) {
 		// Get event name
 		var eventName;
-		if (e.target.classList.contains('well')) {
-			eventName = e.target.getElementsByTagName('h4')[0].textContent;
+		if (e.target.classList.contains('card')) {
+			eventName = e.target.getElementsByTagName('h5')[0].textContent;
 		} else if (e.target.tagName === 'P') {
-			eventName = e.target.parentNode.getElementsByTagName('h4')[0].textContent;
-		} else if (e.target.tagName === 'H4') {
+			eventName = e.target.parentNode.getElementsByTagName('h5')[0].textContent;
+		} else if (e.target.tagName === 'H5') {
 			eventName = e.target.textContent;
 		} else { // User didn't click a specific event card
 			return;
 		}
 
 		// AJAX's POST request to retrieve details of this specific event
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "api.php", true);
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.send("eventAttendees=true&eventName="+eventName);
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "api.php", true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send("eventAttendees=true&eventName=" + eventName);
 
-		xhr.onload = function() {
+		xhr.onload = function () {
 			if (xhr.status === 200) {
 				setEventModal(eventName, JSON.parse(xhr.responseText));
 			} else {
 				console.log('Request failed.  Returned status of ' + xhr.status);
 			}
 		};
-		
+
 	};
 
 	// Assign a click event listener to the wrapper of event cards
@@ -144,12 +144,12 @@ if (filename === '/EventWeb/event.php') {
 	eventsWrapper.addEventListener('click', eventWellHandler);
 } else if (filename === '/EventWeb/signup.php') {
 	// fix invalid email input conflict with signup form
-	$(function() {
-		$(".register_input").each(function() {
+	$(function () {
+		$(".register_input").each(function () {
 			changeState($(this));
 		});
 
-		$(".register_input").on("focusout", function() {
+		$(".register_input").on("focusout", function () {
 			changeState($(this));
 		});
 
@@ -165,34 +165,32 @@ if (filename === '/EventWeb/event.php') {
 	/* 
 		Switch actions
 	*/
-	$('.unmask').on('click', function(){
-	
-		if($(this).prev('input').attr('type') == 'password'){
+	$('.unmask').on('click', function () {
+
+		if ($(this).prev('input').attr('type') == 'password') {
 			changeType($(this).prev('input'), 'text');
 			$('.unmask').html("<i class='glyphicon glyphicon-eye-open'></i>");
-		}
-		
-		else{
+		} else {
 			changeType($(this).prev('input'), 'password');
 			$('.unmask').html("<i class='glyphicon glyphicon-eye-close'></i>");
 		}
-		
-		
+
+
 		return false;
 	});
-  
-  
+
+
 	/* 
 		function from : https://gist.github.com/3559343
 		Thank you bminer!
 	*/
-  
-  	function changeType(x, type) {
-		if(x.prop('type') == type)
+
+	function changeType(x, type) {
+		if (x.prop('type') == type)
 			return x; //That was easy.
 		try {
 			return x.prop('type', type); //Stupid IE security will not allow this
-		} catch(e) {
+		} catch (e) {
 			//Try re-creating the element (yep... this sucks)
 			//jQuery has no html() method for the element, so we have to put into a div first
 			var html = $("<div>").append(x.clone()).html();
@@ -200,17 +198,16 @@ if (filename === '/EventWeb/event.php') {
 			//If no match, we add the type attribute to the end; otherwise, we replace
 			var tmp = $(html.match(regex) == null ?
 				html.replace(">", ' type="' + type + '">') :
-				html.replace(regex, 'type="' + type + '"') );
+				html.replace(regex, 'type="' + type + '"'));
 			//Copy data from old element
-			tmp.data('type', x.data('type') );
+			tmp.data('type', x.data('type'));
 			var events = x.data('events');
-			var cb = function(events) {
-				return function() {
+			var cb = function (events) {
+				return function () {
 					//Bind all prior events
-					for(i in events)
-					{
+					for (i in events) {
 						var y = events[i];
-						for(j in y)
+						for (j in y)
 							tmp.bind(i, y[j].handler);
 					}
 				}
@@ -219,84 +216,75 @@ if (filename === '/EventWeb/event.php') {
 			setTimeout(cb, 10); //Wait a bit to call function
 			return tmp;
 		}
-  	}
+	}
 }
 
-function AddBorder(num, arraysize) { 
-	if(num == 1)
-	{
+function AddBorder(num, arraysize) {
+	if (num == 1) {
 		document.getElementById('opt1').style.border = '4px solid black';
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = 'none';
-		if (arraysize > 0)
-		{
-			$("#submission").attr("disabled",false);	
+		if (arraysize > 0) {
+			$("#submission").attr("disabled", false);
 		}
-		
+
 	}
-	if(num == 2)
-	{
+	if (num == 2) {
 		document.getElementById('opt1').style.border = 'none';
 		document.getElementById('opt2').style.border = '4px solid black';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = 'none';
-		if (arraysize > 0)
-		{
-			$("#submission").attr("disabled",false);	
+		if (arraysize > 0) {
+			$("#submission").attr("disabled", false);
 		}
 	}
-	if(num == 3)
-	{
+	if (num == 3) {
 		document.getElementById('opt1').style.border = 'none';
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = '4px solid black';
 		document.getElementById('opt4').style.border = 'none';
-		if (arraysize > 0)
-		{
-			$("#submission").attr("disabled",false);	
+		if (arraysize > 0) {
+			$("#submission").attr("disabled", false);
 		}
 	}
-	if(num == 4)
-	{
+	if (num == 4) {
 		document.getElementById('opt1').style.border = 'none';
 		document.getElementById('opt2').style.border = 'none';
 		document.getElementById('opt3').style.border = 'none';
 		document.getElementById('opt4').style.border = '4px solid black';
-		if (arraysize > 0)
-		{
-			$("#submission").attr("disabled",false);	
+		if (arraysize > 0) {
+			$("#submission").attr("disabled", false);
 		}
 	}
-	}
+}
 
 function getOrg(user1, user2, userid, event, PartList, CartList) {
 	var modalContent = document.getElementsByClassName('modal-content')[0];
 	var Org = document.getElementById("EventOrganizer").innerHTML;
 	var goingButton = modalContent.getElementsByClassName('going-btn')[0];
-	if(user1 == user2) {
+	if (user1 == user2) {
 		document.getElementById('GoingButton').setAttribute('value', "Going");
-		$("#GoingButton").attr("disabled",true);
+		$("#GoingButton").attr("disabled", true);
 		goingButton.classList.add('btn-primary');
 		goingButton.classList.remove('btn-default');
-	}
-	else {
+	} else {
 		var flag = 0;
 		for (participants in PartList) {
-			if(userid === PartList[participants].user_id && event === PartList[participants].event_id) {
+			if (userid === PartList[participants].user_id && event === PartList[participants].event_id) {
 				document.getElementById('GoingButton').setAttribute('value', "Going");
-				$("#GoingButton").attr("disabled",true);
+				$("#GoingButton").attr("disabled", true);
 				goingButton.classList.add('btn-primary');
 				goingButton.classList.remove('btn-default');
 				flag = 1;
 			}
 		}
 
-		if(flag == 0) {
+		if (flag == 0) {
 			for (carts in CartList) {
-				if(CartList[carts].user_id == Number(userid) && CartList[carts].id == Number(event)) {
+				if (CartList[carts].user_id == Number(userid) && CartList[carts].id == Number(event)) {
 					document.getElementById('GoingButton').setAttribute('value', "In Cart");
-					$("#GoingButton").attr("disabled",true);
+					$("#GoingButton").attr("disabled", true);
 					goingButton.classList.add('btn-primary');
 					goingButton.classList.remove('btn-default');
 					flag = 1;
@@ -304,9 +292,9 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 			}
 		}
 
-		if(flag == 0) {
+		if (flag == 0) {
 			document.getElementById('GoingButton').setAttribute('value', "Add to Cart");
-			$("#GoingButton").attr("disabled",false);
+			$("#GoingButton").attr("disabled", false);
 			goingButton.classList.add('btn-default');
 			goingButton.classList.remove('btn-primary');
 		}
@@ -316,25 +304,23 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 var total = 0;
 var checkboxes = 0;
 $selectedCart = [];
+
 function getTotal($a, $b) {
-  var checkBox = document.getElementById($b);
-  if (checkBox.checked == true){
-    total = total + $a;
-    checkboxes++;
-    $selectedCart.push($b);
-  } else {
-    total = total - $a;
-    checkboxes--;
-    $selectedCart.splice( $selectedCart.indexOf($b), 1 );
-  }
-  document.getElementById("totalprice").innerHTML = total.toFixed(2);
-  if(checkboxes > 0)
-  {
-    $("#checkoutButton").attr("disabled",false);
-  }
-  else
-  {
-    $("#checkoutButton").attr("disabled",true);
-  }
-  document.getElementById("selectedCart").setAttribute('value', $selectedCart);
+	var checkBox = document.getElementById($b);
+	if (checkBox.checked == true) {
+		total = total + $a;
+		checkboxes++;
+		$selectedCart.push($b);
+	} else {
+		total = total - $a;
+		checkboxes--;
+		$selectedCart.splice($selectedCart.indexOf($b), 1);
+	}
+	document.getElementById("totalprice").innerHTML = total.toFixed(2);
+	if (checkboxes > 0) {
+		$("#checkoutButton").attr("disabled", false);
+	} else {
+		$("#checkoutButton").attr("disabled", true);
+	}
+	document.getElementById("selectedCart").setAttribute('value', $selectedCart);
 }

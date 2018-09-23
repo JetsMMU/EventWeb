@@ -30,7 +30,8 @@
 <body>
   <!-- header -->
   <?php require('partials/header.php'); ?>
-
+	<br>
+	
   <!-- body -->
   <div class="container">
 		<?php if (isset($_SESSION['createEventMessage'])) { ?>
