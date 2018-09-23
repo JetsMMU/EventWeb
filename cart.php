@@ -18,7 +18,7 @@
   $stmt->execute();
 
   // Retrieve events and their organizers
-  $sql = 'SELECT cart.id, event.name, event.description, event.price FROM cart INNER JOIN event ON cart.id = event.id';
+  $sql = 'SELECT cart.id, cart.user_id, event.name, event.description, event.price FROM cart INNER JOIN event ON cart.id = event.id';
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
   $carts = $stmt->fetchAll();
@@ -29,6 +29,11 @@
   foreach ($carts as $cart) {
       array_push($cartContents, $cart);
   }
+
+  $sql = 'SELECT id FROM user where name = "' . $_SESSION['username'] . '"';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $curID = $stmt->fetchColumn();
 ?>
 
 <!DOCTYPE html>
@@ -64,9 +69,11 @@
               <th>Event Description</th>
               <th>Price</th>
             </tr>
-            <?php foreach ($cartContents as $cart) { ?>
+            <?php foreach ($cartContents as $cart) { 
+              if($curID == $cart['user_id']) {
+              ?>
             <tr>
-              <td><input type="checkbox" id="<?php echo $cart['id'];?>" onclick="getTotal(<?php echo $cart['price']; ?>, <?php echo $cart['id']; ?>, <?php echo json_encode($_SESSION['selectedCart']) ?>)"></td>
+              <td><input type="checkbox" id="<?php echo $cart['id'];?>" onclick="getTotal(<?php echo $cart['price']; ?>, <?php echo $cart['id']; ?>)"></td>
               <td><?php echo $cart['name'];?></td> 
               <td><?php echo $cart['description']; ?></td>
               <td><?php echo $cart['price']; ?></td>
@@ -78,6 +85,7 @@
                 </form>
               </td>
             </tr>
+            <?php } ?>
             <?php } ?>
             <tr>
               <td></td>

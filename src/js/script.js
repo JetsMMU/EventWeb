@@ -316,7 +316,7 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 var total = 0;
 var checkboxes = 0;
 $selectedCart = [];
-function getTotal($a, $b, $c) {
+function getTotal($a, $b) {
   var checkBox = document.getElementById($b);
   if (checkBox.checked == true){
     total = total + $a;
