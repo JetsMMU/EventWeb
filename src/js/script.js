@@ -30,6 +30,8 @@ if (filename === '/EventWeb/event.php') {
 		// Inputs
 		if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
 			modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
+			document.getElementById('GoingButton').setAttribute('value', "Event Ended");
+			document.getElementById('GoingButton').setAttribute('disabled', "true");
 		} else {
 			modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
 		}
@@ -274,11 +276,12 @@ function getOrg(user1, user2, userid, event, PartList, CartList) {
 	var modalContent = document.getElementsByClassName('modal-content')[0];
 	var Org = document.getElementById("EventOrganizer").innerHTML;
 	var goingButton = modalContent.getElementsByClassName('going-btn')[0];
+
 	if(user1 == user2) {
-		document.getElementById('GoingButton').setAttribute('value', "Going");
-		$("#GoingButton").attr("disabled",true);
-		goingButton.classList.add('btn-primary');
-		goingButton.classList.remove('btn-default');
+	document.getElementById('GoingButton').setAttribute('value', "Going");
+	$("#GoingButton").attr("disabled",true);
+	goingButton.classList.add('btn-primary');
+	goingButton.classList.remove('btn-default');
 	}
 	else {
 		var flag = 0;
