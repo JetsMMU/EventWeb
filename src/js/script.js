@@ -169,10 +169,10 @@ if (filename === '/EventWeb/event.php') {
 
 		if ($(this).prev('input').attr('type') == 'password') {
 			changeType($(this).prev('input'), 'text');
-			$('.unmask').html("<i class='glyphicon glyphicon-eye-open'></i>");
+			$('.unmask').html("<i class='fas fa-eye'></i>");
 		} else {
 			changeType($(this).prev('input'), 'password');
-			$('.unmask').html("<i class='glyphicon glyphicon-eye-close'></i>");
+			$('.unmask').html("<i class='fas fa-eye-slash'></i>");
 		}
 
 
