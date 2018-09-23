@@ -30,6 +30,8 @@ if (filename === '/EventWeb/event.php') {
 		// Inputs
 		if (isEventEnded || eventDetail === 'ERROR: No such event.') { // Hide going button
 			modalContent.getElementsByClassName('going-btn')[0].classList.add('hidden');
+			document.getElementById('GoingButton').setAttribute('value', "Event Ended");
+			document.getElementById('GoingButton').setAttribute('disabled', "true");
 		} else {
 			modalContent.getElementsByClassName('input-event-name')[0].value = eventName;
 		}
