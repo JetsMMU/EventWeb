@@ -93,10 +93,24 @@ else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isse
 }
 
 else if(isset($_POST['paynow'])) {
-		$todelete = (int)$_POST['paynow'];
-		$sql = "DELETE FROM cart where cart.user_id = $todelete AND cart.activation = 1";
+		$userid = (int)$_POST['paynow'];
+
+		$sql2 = 'SELECT id FROM cart WHERE activation = 1 AND user_id = (SELECT id FROM user WHERE name = "'. $_SESSION['username'] .'")';
+		$stmt2 = $pdo->prepare($sql2);
+		$stmt2->execute();
+		$participate = $stmt2->fetchAll();
+		
+		foreach ($participate as $cart) {
+			$sql3 = "INSERT INTO participation (event_id, user_id) VALUES ($cart[id] , $userid)";
+			$stmt3 = $pdo->prepare($sql3);
+			$stmt3->execute();
+		}
+		
+	
+		$sql = "DELETE FROM cart where cart.user_id = $userid AND cart.activation = 1";
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
+
 		header('location: PaymentSuccess.php');
 }
 
