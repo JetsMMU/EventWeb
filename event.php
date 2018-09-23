@@ -104,7 +104,7 @@
     
         <div class="tab-content">
           <div class="tab-pane active" id="upcoming">
-            <h3>Upcoming Events</h3>
+            <!-- <h3>Upcoming Events</h3> -->
             <div class="row">
               <?php foreach ($upcomingEvents as $event) { ?>
                 <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal" onclick='getOrg("<?php echo $_SESSION['username']; ?>", "<?php echo $event['organizer']; ?>", "<?php echo $curID ?>", "<?php echo $event['id']; ?>" , <?php echo json_encode($participationList); ?>, <?php echo json_encode($cartList); ?>)'>
@@ -124,7 +124,7 @@
             </div>
           </div>
           <div class="tab-pane" id="past">
-            <h3>Past Events</h3>
+            <!-- <h3>Past Events</h3> -->
             <div class="row">
               <?php foreach ($pastEvents as $event) { ?>
                 <div class="col-sm-4 card" data-toggle="modal" data-target="#eventModal">
