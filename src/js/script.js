@@ -13,7 +13,7 @@ for (var i = 0; i < links.length; i++) {
 }
 
 var filename = window.location.pathname;
-if (filename === '/EventWeb/event.php') {
+if (filename === 'event.php') {
 	function setEventModal(eventName, eventDetail, isEventEnded) {
 		var modalContent = document.getElementsByClassName('modal-content')[0];
 
@@ -90,7 +90,9 @@ if (filename === '/EventWeb/event.php') {
 	// Assign a click event listener to the wrapper of event cards
 	var eventsWrapper = document.getElementsByClassName('tab-content')[0];
 	eventsWrapper.addEventListener('click', eventWellHandler);
-} else if (filename === '/EventWeb/dashboard.php') {
+} 
+
+else if (filename === 'dashboard.php') {
 	function setEventModal(eventName, attendees) {
 		var modalContent = document.getElementsByClassName('modal-content')[0];
 		modalContent.getElementsByClassName('modal-title')[0].textContent = eventName;
@@ -144,7 +146,9 @@ if (filename === '/EventWeb/event.php') {
 	// Assign a click event listener to the wrapper of event cards
 	var eventsWrapper = document.getElementsByClassName('tab-content')[0];
 	eventsWrapper.addEventListener('click', eventWellHandler);
-} else if (filename === '/EventWeb/signup.php') {
+} 
+
+else if (filename === 'signup.php') {
 	// fix invalid email input conflict with signup form
 	$(function () {
 		$(".register_input").each(function () {
@@ -163,7 +167,9 @@ if (filename === '/EventWeb/event.php') {
 			}
 		}
 	});
-} else if (filename === '/EventWeb/changePassword.php') {
+} 
+
+else if (filename === 'changePassword.php') {
 	/* 
 		Switch actions
 	*/

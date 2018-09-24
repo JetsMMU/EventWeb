@@ -1,73 +1,73 @@
 <?php
-  session_start();
+session_start();
   
   // Connect to database
-  /**
-   * Use these lines only if the file requires database connection. 
-   */
-	$config = require('config.php');
-	$dsn = $config['connection'] . ';dbname=' . $config['dbname'] . ';charset=' . $config['charset'];
-	try {
-		$pdo = new PDO($dsn, $config['username'], $config['password'], $config['options']);
-	} catch (PDOException $e) {
-		die($e->getMessage());
-  }
+/**
+ * Use these lines only if the file requires database connection. 
+ */
+$config = require('config.php');
+$dsn = $config['connection'] . ';dbname=' . $config['dbname'] . ';charset=' . $config['charset'];
+try {
+  $pdo = new PDO($dsn, $config['username'], $config['password'], $config['options']);
+} catch (PDOException $e) {
+  die($e->getMessage());
+}
   
   // Retrieve events and their organizers
-  $sql = 'SELECT event.id, event.user_id, event.name, event.date, event.time, event.price, user.name AS organizer
+$sql = 'SELECT event.id, event.user_id, event.name, event.date, event.time, event.price, user.name AS organizer
   FROM event
   INNER JOIN user ON event.user_id = user.id
   ORDER BY event.date desc';
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-  $events = $stmt->fetchAll();
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$events = $stmt->fetchAll();
 
   // Separate events into upcoming and past
-  $upcomingEvents = [];
-  $pastEvents = [];
+$upcomingEvents = [];
+$pastEvents = [];
 
-  foreach ($events as $event) {
+foreach ($events as $event) {
     // Convert 00:00:00 to 00:00 AM/PM
-    $event['time'] = date('h:i A', strtotime($event['time']));
+  $event['time'] = date('h:i A', strtotime($event['time']));
 
     // Check whether event's datetime >= today 
-    if (date('Y-m-d H:i:s', strtotime($event['date'] . ' ' . $event['time'])) >= date('Y-m-d H:i:s')) {
-      array_push($upcomingEvents, $event);
-    } else {
-      array_push($pastEvents, $event);
-    }
+  if (date('Y-m-d H:i:s', strtotime($event['date'] . ' ' . $event['time'])) >= date('Y-m-d H:i:s')) {
+    array_push($upcomingEvents, $event);
+  } else {
+    array_push($pastEvents, $event);
   }
+}
 
-  $sql = 'SELECT participation.event_id, participation.user_id, event.name AS eventname, user.name AS username FROM participation 
+$sql = 'SELECT participation.event_id, participation.user_id, event.name AS eventname, user.name AS username FROM participation 
   INNER JOIN event ON event.id = participation.event_id
   INNER JOIN user ON user.id = participation.user_id';
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$participations = $stmt->fetchAll();
+
+$participationList = [];
+
+foreach ($participations as $participation) {
+  array_push($participationList, $participation);
+}
+
+if (isset($_SESSION['username'])) {
+  $sql = 'SELECT id FROM user where name = "' . $_SESSION['username'] . '"';
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
-  $participations = $stmt->fetchAll();
+  $curID = $stmt->fetchColumn();
 
-  $participationList = [];
+  $sql = 'SELECT * FROM cart';
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute();
+  $carts = $stmt->fetchAll();
 
-  foreach ($participations as $participation) {
-    array_push($participationList, $participation);
+  $cartList = [];
+
+  foreach ($carts as $cart) {
+    array_push($cartList, $cart);
   }
-
-  if (isset($_SESSION['username'])){
-    $sql = 'SELECT id FROM user where name = "' . $_SESSION['username'] . '"';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $curID = $stmt->fetchColumn();
-
-    $sql = 'SELECT * FROM cart';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    $carts = $stmt->fetchAll();
-
-    $cartList = [];
-
-    foreach ($carts as $cart) {
-      array_push($cartList, $cart);
-    }
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +89,8 @@
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <strong>Success!</strong> <?php echo $_SESSION['eventAttendanceMessage']; ?>
           </div>
-        <?php } ?>
+        <?php 
+      } ?>
         <?php unset($_SESSION['eventAttendanceMessage']); ?>
       </div>
     </div>
@@ -118,11 +119,18 @@
                     <p>Price: <?php echo $event['price']; ?></p>
                     Participants:
                     <p>
-                    <?php $temp = 0; foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { $temp++; }} echo $temp; ?>
+                    <?php $temp = 0;
+                    foreach ($participationList as $participant) {
+                      if ($event['id'] == $participant['event_id']) {
+                        $temp++;
+                      }
+                    }
+                    echo $temp; ?>
                     </p>
                   </div>
                 </div>
-              <?php } ?>
+              <?php 
+            } ?>
             </div>
           </div>
           <div class="tab-pane" id="past">
@@ -138,11 +146,18 @@
                     <p>Price: <?php echo $event['price']; ?></p>
                     Participants:
                     <p>
-                    <?php $temp = 0; foreach ($participationList as $participant) { if($event['id'] == $participant['event_id']) { $temp++; }} echo $temp; ?>
+                    <?php $temp = 0;
+                    foreach ($participationList as $participant) {
+                      if ($event['id'] == $participant['event_id']) {
+                        $temp++;
+                      }
+                    }
+                    echo $temp; ?>
                     </p>
                   </div> 
                 </div>
-              <?php } ?>
+              <?php 
+            } ?>
             </div>
           </div>	        
         </div>		
@@ -172,9 +187,11 @@
 							<input type="hidden" name="eventName" class="input-event-name">
 							<input type="hidden" name="eventAttendance" class="input-attendance">
               <input id = GoingButton type="submit" name="eventAttendee" value="Add to Cart" class="btn going-btn">
-						<?php } else { ?>
-							<a href="/EventWeb/login.php" class="btn btn-default" role="button">Login</a>
-						<?php } ?>
+						<?php 
+    } else { ?>
+							<a href="login.php" class="btn btn-default" role="button">Login</a>
+						<?php 
+    } ?>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</form>
 				</div>

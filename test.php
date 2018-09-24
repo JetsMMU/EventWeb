@@ -1,4 +1,4 @@
-?php
+<?php
   session_start();
   
   // Connect to database
@@ -69,7 +69,8 @@
                     <p>Time: <?php echo $event['time']; ?></p>
                   </div> 
                 </div>
-              <?php } ?>
+              <?php 
+            } ?>
             </div>
           </div>          
         </div>    

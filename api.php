@@ -13,16 +13,16 @@ try {
 //testing 
 // for dashboard.php
 if (isset($_POST['eventAttendees']) && $_POST['eventAttendees'] && isset($_POST['eventName'])) {
-    $sql = 'SELECT user.name 
+	$sql = 'SELECT user.name 
             FROM participation 
             INNER JOIN user ON participation.user_id = user.id
             WHERE event_id = (SELECT id FROM event WHERE name = :name)';
-    $stmt = $pdo->prepare($sql);
+	$stmt = $pdo->prepare($sql);
 	$stmt->execute(['name' => $_POST['eventName']]);
 	$attendees = $stmt->fetchAll();
-    
-    if ($attendees) {
-		echo json_encode($attendees);	
+
+	if ($attendees) {
+		echo json_encode($attendees);
 	} else {
 		echo json_encode("ERROR: No such attendees/event.");
 	}
@@ -51,20 +51,20 @@ else if (isset($_GET['eventName'])) {
 			$event['attendance'] = !empty($attendance);
 			unset($event['id']);
 		}
-		echo json_encode($event);	
+		echo json_encode($event);
 	} else {
 		echo json_encode("ERROR: No such event.");
 	}
 } 
+
 else if (isset($_POST['eventName']) && isset($_POST['eventAttendance'])) {
-	if($_POST['eventAttendee'] === 'Add to Cart') {
+	if ($_POST['eventAttendee'] === 'Add to Cart') {
 		$sql = 'INSERT INTO cart (id, user_id)
-		VALUES ((SELECT id FROM event WHERE name = "' . $_POST['eventName'] .'"), (SELECT id FROM user WHERE name = "'. $_SESSION['username'] .'"))';
+		VALUES ((SELECT id FROM event WHERE name = "' . $_POST['eventName'] . '"), (SELECT id FROM user WHERE name = "' . $_SESSION['username'] . '"))';
 		$stmt = $pdo->prepare($sql);
 		$stmt->execute();
-		$_SESSION['eventAttendanceMessage'] =  $_POST['eventName'] . ' has been added to the cart.';
-	}
-	else { // Undefined behaviour
+		$_SESSION['eventAttendanceMessage'] = $_POST['eventName'] . ' has been added to the cart.';
+	} else { // Undefined behaviour
 		die($_POST['eventAttendance']);
 	}
 	header('location: event.php');
@@ -90,52 +90,53 @@ else if (isset($_POST['eventName']) && isset($_POST['eventDescription']) && isse
 
 	$_SESSION['createEventMessage'] = $_POST['eventName'] . ' is created.';
 	header('location: createEvent.php');
-}
+} 
 
-else if(isset($_POST['paynow'])) {
-		$userid = (int)$_POST['paynow'];
+else if (isset($_POST['paynow'])) {
+	$userid = (int)$_POST['paynow'];
 
-		$sql2 = 'SELECT id FROM cart WHERE activation = 1 AND user_id = (SELECT id FROM user WHERE name = "'. $_SESSION['username'] .'")';
-		$stmt2 = $pdo->prepare($sql2);
-		$stmt2->execute();
-		$participate = $stmt2->fetchAll();
-		
-		foreach ($participate as $cart) {
-			$sql3 = "INSERT INTO participation (event_id, user_id) VALUES ($cart[id] , $userid)";
-			$stmt3 = $pdo->prepare($sql3);
-			$stmt3->execute();
-		}
-		
-	
-		$sql = "DELETE FROM cart where cart.user_id = $userid AND cart.activation = 1";
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute();
+	$sql2 = 'SELECT id FROM cart WHERE activation = 1 AND user_id = (SELECT id FROM user WHERE name = "' . $_SESSION['username'] . '")';
+	$stmt2 = $pdo->prepare($sql2);
+	$stmt2->execute();
+	$participate = $stmt2->fetchAll();
 
-		header('location: PaymentSuccess.php');
-}
+	foreach ($participate as $cart) {
+		$sql3 = "INSERT INTO participation (event_id, user_id) VALUES ($cart[id] , $userid)";
+		$stmt3 = $pdo->prepare($sql3);
+		$stmt3->execute();
+	}
 
-else if(isset($_POST['reset'])) {
-		$toreset = (int)$_POST['reset'];
-		$sql = "UPDATE cart SET cart.activation = 0 WHERE cart.user_id = $toreset ";
-		$stmt = $pdo->prepare($sql);
-		$stmt->execute();
-		header('location: cart.php');	
-}
 
-else if (isset($_POST['removeButton']) && isset($_POST['CartDelete']) && isset($_POST['eventName'])) {
-	$sql = 'DELETE FROM cart where id = ' . $_POST['CartDelete'] . ' && user_id = (SELECT id FROM user WHERE name = "'. $_SESSION['username'] .'")';
+	$sql = "DELETE FROM cart where cart.user_id = $userid AND cart.activation = 1";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
-	$_SESSION['cartMessage'] =  $POST['eventName'] . ' has been removed from the cart.';
+
+	header('location: PaymentSuccess.php');
+} 
+
+else if (isset($_POST['reset'])) {
+	$toreset = (int)$_POST['reset'];
+	$sql = "UPDATE cart SET cart.activation = 0 WHERE cart.user_id = $toreset ";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
 	header('location: cart.php');
-}
+} 
+
+else if (isset($_POST['removeButton']) && isset($_POST['CartDelete']) && isset($_POST['eventName'])) {
+	$sql = 'DELETE FROM cart where id = ' . $_POST['CartDelete'] . ' && user_id = (SELECT id FROM user WHERE name = "' . $_SESSION['username'] . '")';
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	$_SESSION['cartMessage'] = $POST['eventName'] . ' has been removed from the cart.';
+	header('location: cart.php');
+} 
 
 else if (isset($_POST['checkoutButton']) && isset($_POST['cartList']) && isset($_POST['eventName'])) {
-	$sql = 'UPDATE cart SET activation = 1 WHERE id IN (' . $_POST['cartList'] . ') && user_id = (SELECT id FROM user WHERE name = "'. $_SESSION['username'] .'")';
+	$sql = 'UPDATE cart SET activation = 1 WHERE id IN (' . $_POST['cartList'] . ') && user_id = (SELECT id FROM user WHERE name = "' . $_SESSION['username'] . '")';
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute();
 	header('location: payment.php');
 }
+
 // for undefined behaviour
 else {
 	header('location: home.php');

@@ -1,5 +1,5 @@
 <?php
-	session_start();
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +13,7 @@
   <!-- body -->
   <div class="container text-center">
     <h1>Payment Successful</h1>
-    <a href="/EventWeb/home.php"><button type="submit" class="btn btn-default">Return to Home</button></a>
+    <a href="home.php"><button type="submit" class="btn btn-default">Return to Home</button></a>
   </div>
 
   <!-- footer -->
