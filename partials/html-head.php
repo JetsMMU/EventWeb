@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="src/css/style.css">
 
 <!-- favicon -->
-<link rel="shortcut icon" href="../src/img/favicon.ico" type="image/x-icon" />
-<link rel="icon" href="../src/img/favicon.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon" />
+<link rel="icon" href="src/img/favicon.ico" type="image/x-icon" />
 
 <!-- color -->
 <meta name="theme-color" content="#00838f" />
