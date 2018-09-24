@@ -23,7 +23,7 @@
 					<li class="nav-item"><a class="nav-link" href="/EventWeb/createEvent.php">Create Event</a></li>
 					<li class="nav-item"><a class="nav-link" href="/EventWeb/dashboard.php">Dashboard</a></li>
 					<li class="nav-item"><a class="nav-link" href="/EventWeb/profile.php">My Profile</a><li>
-          <li class="nav-item"><a class="nav-link" href="/EventWeb/cart.php">My Cart</a><li>
+          <li class="nav-item"><a class="nav-link" href="/EventWeb/cart.php">My Cart<span class="badge"></span></a><li>
 				<?php endif; ?>
 				<?php if(isset($_SESSION['username'])): ?>
 					<li class="nav-item"><a class="nav-link" href="/EventWeb/logout.php">Logout</a></li>

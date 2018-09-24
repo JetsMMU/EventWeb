@@ -22,7 +22,7 @@ try {
 }
   
   // Retrieve events that user is joining or had joined        
-$sql = 'SELECT event.name, event.date, event.time, user.name AS organizer
+$sql = 'SELECT event.name, event.date, event.time, event.price, user.name AS organizer
   FROM event
   INNER JOIN participation ON event.id = participation.event_id
   INNER JOIN user ON event.user_id = user.id
@@ -33,7 +33,7 @@ $stmt->execute(['name' => $_SESSION['username']]);
 $events = $stmt->fetchAll();   
 
   // Retrieve events that user has created
-$sql = 'SELECT event.name, event.date, event.time, user.name AS organizer
+$sql = 'SELECT event.name, event.date, event.time, event.price, user.name AS organizer
   FROM event
   INNER JOIN user ON event.user_id = user.id
   WHERE user.id = (SELECT id FROM user WHERE name = :name)
@@ -95,6 +95,7 @@ foreach ($events as $event) {
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
+                    <p>Price: <?php echo $event['price']; ?></p>
                   </div>
                 </div>
               <?php 
@@ -111,6 +112,7 @@ foreach ($events as $event) {
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
+                    <p>Price: <?php echo $event['price']; ?></p>
                   </div>
                 </div>
               <?php 
@@ -126,6 +128,7 @@ foreach ($events as $event) {
                     <p>By: <?php echo $event['organizer']; ?></p>
                     <p>Date: <?php echo $event['date']; ?></p>
                     <p>Time: <?php echo $event['time']; ?></p>
+                    <p>Price: <?php echo $event['price']; ?></p>
                   </div>
                 </div>
               <?php 

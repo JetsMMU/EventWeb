@@ -51,20 +51,22 @@
     array_push($participationList, $participation);
   }
 
-  $sql = 'SELECT id FROM user where name = "' . $_SESSION['username'] . '"';
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-  $curID = $stmt->fetchColumn();
+  if (isset($_SESSION['username'])){
+    $sql = 'SELECT id FROM user where name = "' . $_SESSION['username'] . '"';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $curID = $stmt->fetchColumn();
 
-  $sql = 'SELECT * FROM cart';
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute();
-  $carts = $stmt->fetchAll();
+    $sql = 'SELECT * FROM cart';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    $carts = $stmt->fetchAll();
 
-  $cartList = [];
+    $cartList = [];
 
-  foreach ($carts as $cart) {
-    array_push($cartList, $cart);
+    foreach ($carts as $cart) {
+      array_push($cartList, $cart);
+    }
   }
 ?>
 
