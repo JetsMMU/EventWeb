@@ -156,8 +156,7 @@ if (isset($_SESSION['username'])) {
                     </p>
                   </div> 
                 </div>
-              <?php 
-            } ?>
+              <?php } ?>
             </div>
           </div>	        
         </div>		
@@ -187,11 +186,9 @@ if (isset($_SESSION['username'])) {
 							<input type="hidden" name="eventName" class="input-event-name">
 							<input type="hidden" name="eventAttendance" class="input-attendance">
               <input id = GoingButton type="submit" name="eventAttendee" value="Add to Cart" class="btn going-btn">
-						<?php 
-    } else { ?>
+						<?php } else { ?>
 							<a href="login.php" class="btn btn-default" role="button">Login</a>
-						<?php 
-    } ?>
+						<?php } ?>
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 					</form>
 				</div>
