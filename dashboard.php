@@ -62,7 +62,6 @@ foreach ($events as $event) {
     array_push($myPastEvents, $event);
   }
 }
-print_r($myUpcomingEvents);
 ?>
 
 <!DOCTYPE html>
