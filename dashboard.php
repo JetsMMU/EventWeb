@@ -42,6 +42,11 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute(['name' => $_SESSION['username']]);
 $myOwnEvents = $stmt->fetchAll();
 
+for ($i = 0; $i < count($myOwnEvents); $i = $i + 1){
+  $temp = date('h:i A', strtotime($myOwnEvents[$i]['time']));
+  $myOwnEvents[$i]['time'] = $temp;
+}
+
   // Separate events into upcoming and past
 $myUpcomingEvents = [];
 $myPastEvents = [];
@@ -57,6 +62,7 @@ foreach ($events as $event) {
     array_push($myPastEvents, $event);
   }
 }
+print_r($myUpcomingEvents);
 ?>
 
 <!DOCTYPE html>
