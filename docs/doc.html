@@ -42,13 +42,13 @@
           Open XAMPP, start Apache and MySQL. 
         </li>
         <li>
-          Go to source folder, run php -S localhost:8000.
+          Copy the source folder "EventWeb" into C:\xampp\htdocs\
         </li>
         <li>
-          Go to web browser, run localhost:8000/config/database.php first.
+          Go to web browser, run localhost/EventWeb/config/database.php first.
         </li>
         <li>
-          Then, run localhost:8000/home.php.
+          Then, run localhost/EventWeb/home.php.
         </li>
       </ol>
     </p>
@@ -77,10 +77,10 @@
     <p>
       <ol>
         <li>
-          For all style files, add into the partials/html-header.php under import comment.
+          For all master style files, add into the partials/html-header.php under import comment. Otherwise the file can be added after the import comment.
         </li>
         <li>
-          For all script files, add into the partials/footer.php under import comment.
+          For all master script files, add into the partials/footer.php under import comment. Otherwise, the file can be added after the import comment.
         </li>
       </ol>
     </p>

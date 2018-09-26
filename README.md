@@ -16,29 +16,21 @@ These instructions will get you a copy of the project up and running on your loc
 ### Running locally
 
 1. Open XAMPP and start Apache server and MySQL database. 
-2. In the source folder, open command prompt and run ```php -S localhost:8000```.
+2. Copy the folder downloaded named ```EventWeb``` and paste into ```C:\xampp\htdocs```.
 
 ### Setup Database
 
-1. In the web browser, go to ```localhost:8000/config/database.php```.
+1. In the web browser, go to ```localhost/EventWeb/config/database.php```.
 2. Then, a link will bring you to the home page.
 
 ### Access Home Page
 
-1. In the web browser, go to ```localhost:8000/home.php```.
-
-## Running the tests
-
-TBA
-
-## Deployment
-
-TBA
+1. In the web browser, go to ```localhost/EventWeb/home.php```.
 
 ## Built With
 
-* PHP - The programming language used
-* Bootstrap - CSS Framework
+* PHP
+* Bootstrap
 * JavaScript
 
 ## Authors
@@ -48,18 +40,14 @@ TBA
 * **Khew Kit Hahn**
 * **Foo Chuan Kang**
 
-## License
-
-TBA
-
 ## Acknowledgments
 
 * John Khor, Kirthi and Hafridz for an existing code base. [link](https://github.com/EventWeb/EventWeb)
 
 ## Task To Do
 
-* [ ] Database table for payment and cart
-* [ ] Payment page
-* [ ] Cart page
-* [ ] Redesign event view
-* [ ] Redesign login and profile
+* [x] Database table for payment and cart
+* [x] Payment page
+* [x] Cart page
+* [x] Redesign event view
+* [x] Redesign login and profile
