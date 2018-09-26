@@ -22,6 +22,7 @@
     </div>
     <div class="row">
       <div class="col-md-4">
+<<<<<<< HEAD
         <div class="card">
           <div class="card-body">
           <a href="/EventWeb/event.php"><h3 class="card-title" style="font-weight: lighter;">Browse Events</h3></a>
@@ -30,6 +31,10 @@
             </p>
           </div>
         </div>
+=======
+        <a href="event.php"><h3 style="font-weight: lighter;">Browse Events</h3></a>
+        <p>Check Events across Your Interests. Browse through The Most Anticipated Events. I have intentionally done something here because I want to verify this works.</p>
+>>>>>>> 09c94ff9b71e5deccef701723b14c6b3afa9e575
       </div>
       <div class="col-md-4">
         <div class="card">
