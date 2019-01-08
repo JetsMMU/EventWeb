@@ -1,7 +1,11 @@
 <footer class="footer text-center">
   <div class="container">
     <span>&copy <span id="year"></span> EventWeb(Jets). All rights reserved.</span> 
+<<<<<<< HEAD
     <a href="/EventWeb/docs/doc.html" id="doc">Documentation</a>
+=======
+    <a href="docs/doc.html" id="doc">Documentation</a>
+>>>>>>> 70494a256315bb46abbf7a7f54a5fac736f9ae9a
   </div>
 </footer>
 

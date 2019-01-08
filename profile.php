@@ -40,33 +40,22 @@ $thisdescription = $user[0]['description'];
 $success = array();
 
 if (isset($_POST['update'])) {
+  echo ("here");
   $new_name = (isset($_POST['full_name']) ? $_POST['full_name'] : null);
   $new_dob = (isset($_POST['dob']) ? $_POST['dob'] : null);
-  if ($thisgender == null) {
-    $new_gender = (isset($_POST['Gender']) ? $_POST['Gender'] : null);
-  }
+  $new_gender = (isset($_POST['Gender']) ? $_POST['Gender'] : null);
   $new_phone = (isset($_POST['phone_number']) ? $_POST['phone_number'] : null);
   $new_occupation = (isset($_POST['Occupation']) ? $_POST['Occupation'] : null);
   $new_description = (isset($_POST['description']) ? $_POST['description'] : null);
 
-  if ($thisgender == null) {
-    $sql = "UPDATE user
-        SET full_name = '$new_name',
-        dob = '$new_dob',
-        gender = '$new_gender',
-        occupation = '$new_occupation',
-        phone = '$new_phone',
-        description = '$new_description'
-        WHERE name='$thisuser'";
-  } else {
-    $sql = "UPDATE user
-        SET full_name = '$new_name',
-        dob = '$new_dob',
-        occupation = '$new_occupation',
-        phone = '$new_phone',
-        description = '$new_description'
-        WHERE name='$thisuser'";
-  }
+  $sql = "UPDATE user
+          SET full_name = '$new_name',
+          dob = '$new_dob',
+          gender = '$new_gender',
+          occupation = '$new_occupation',
+          phone = '$new_phone',
+          description = '$new_description'
+          WHERE name='$thisuser'";
 
   $stmt = $pdo->prepare($sql);
   $stmt->execute();
@@ -113,8 +102,15 @@ if (isset($_POST['update'])) {
 
           <div class="form-row">
             <div class="form-group col-md-6">
-              <label for="Gender">Gender</label>
-              <input id="gender" name="Gender_edit" type="text" class="form-control" value="<?php echo $thisgender ?>" disabled>
+              <label for="Gender">Gender</label> <small id="genderHelpInline" class="text-muted"><span style="color: red">**</span>You can only set once.</small>
+              <?php if ($thisgender == null) { ?>
+                <select class="form-control" id="gender" name="Gender">
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              <?php } else { ?>
+                <input id="gender" name="Gender" type="text" class="form-control" value="<?php echo $thisgender ?>" disabled>
+              <?php } ?>
             </div>
 
             <div class="form-group col-md-6">
